@@ -1,0 +1,267 @@
+============================================================================ 
+EMNLP 2020 Reviews for Submission #3022
+============================================================================ 
+
+Title: Pre-training Entity Relation Encoder with Intra-span and Inter-span Information
+Authors: Yijun Wang, Changzhi Sun, Yuanbin Wu, Junchi Yan, Peng Gao and Guotong Xie
+============================================================================
+                            META-REVIEW
+============================================================================ 
+
+Comments: All reviewers agree that the proposed method is promising for pretraining entity-relation classification models, and the results obtained through experiments show the method works well under the proposed setup. This paper would be a stronger submission if the authors keep their promise to conduct more in-depth analysis.
+
+============================================================================
+                            REVIEWER #1
+============================================================================
+
+What is this paper about, what contributions does it make, and what are the main strengths and weaknesses?
+---------------------------------------------------------------------------
+The author(s) propose a pre-training network architecture for the Entity-Relation task incorporating two novel modules: a span encoder (intra-span) and a span-pair encoder (inter-span). Three pre-training objectives are defined and jointly trained sharing parameters. The main idea is to come up with richer contextual span representations for the entity and relation detection. Experiments were conducted on two benchmark datasets (ACE05 & SciERC) showing promising results with the proposed framework outperforming pre-trained language models (BERT baseline), and achieving state-of-the-art performance for the ACE05 dataset.
+
+The main contributions are the following:
+
+(a) the development of a pre-training network architecture integrating a span encoder and a span-pair encoder (section 3),
+(b) the experimental setup running evaluations on two datasets against five state-of-the-art systems (section 4).
+
+Strengths: 
+(a) The proposed encoders for span and span-pair representations for the Entity-Relation task,
+(b) the integration of the novel contrastive loss function and the Momentum Contrast (MoCo) framework in learning span-pair representations,
+(c) Evaluation and Results are described in detail showing SoTA performance on the ACE05 dataset against five SOTA systems,
+(d) The code and the pre-trained models will be made available for further research.
+
+Limitations:
+(a) Qualitative and Error analysis can be improved by consolidating findings along entity types and relation types (see below),
+(b) Section 3.4 presenting the Entity-Relation extraction framework and the fine-tuning of the pre-training models should be improved and enhanced,
+(c) Some figures in the experiments are not justified (see below).
+---------------------------------------------------------------------------
+
+
+Reasons to accept
+---------------------------------------------------------------------------
+The paper addresses important challenges in Entity-Relation Modeling in an interesting way (through two encoders at span and span-pair level). The proposed 
+framework is promising and the general idea is well presented.
+---------------------------------------------------------------------------
+
+
+Reasons to reject
+---------------------------------------------------------------------------
+Detailed comments:
+
+I found some technical details especially in the experimental setup not covered and need to be addressed by the author(s):
+
+- further discussion and investigation is needed about the inefficiency and poor performance of distant supervised datasets (NYT) and the SPE-DS model;
+- examination of the proposed SPE models on entity evaluation (Table 2); SPE under-performance compared to (Luan et al) and (Wadden et al) is due to errors in entity span detection (mainly with the contribution of the sentence encoder) and/or errors in entity type (mainly with the contribution of the span encoder).  
+- Table 4: I do not find any justification of the drop figures (i.e. 3.9 and 1.9 points mentioned in the text, respectively) for the -SPO model, BERT figures in Table 4 are also missing,
+- many References do not include the publication venue; the preprint in arXiv is only mentioned although it was known at the EMNLP submission date.
+- SciBERT might be a better candidate for the SciERC dataset compared to BERT-Base.
+
+Although the emphasis in the paper is about the pre-training encoders and the span/span-pair rich representations, a Figure with the neural architecture adopted for fine--tuning for Entity-Relation extraction is needed in section 3.4  since the author(s) mention that they follow (Sun et al 2019a) but in section 5 they comment that they diverge from this work (i.e. Sun et al 2019a) by not using the GCN.
+
+Moreover, Qualitative Evaluation and Error analysis is missing. I would expect to see a brief analysis of examples and a discussion related to ranking errors/faults under the perspective of the two encoders proposed and the entity/relation pairs/types. Which entity/relation types are harder to classify? What is the impact of sentence length and the number of entities in the sentence found by the entity detector? What is a good explanation of the decrease in performance in SciERC (Table 7) compared to ACE05 (Tables 2,3)? Some of these issues could have been presented in supplementary Material to save space. In the results, author(s) do not report on statistical significance tests on the Tables presented.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                         Reproducibility: 4
+                  Overall Recommendation: 4
+
+Questions for the Author(s)
+---------------------------------------------------------------------------
+Please, check my remarks and questions above.
+---------------------------------------------------------------------------
+
+
+Missing References
+---------------------------------------------------------------------------
+- Jiayu Chen, Caixia Yuan, XiaojieWang, and Ziwei Bai. 2019. Mrmep: Joint extraction of multiple relations and multiple entity pairs based on triplet attention.
+In Proceedings of the 23rd Conference on Computational Natural Language Learning (CoNLL), pages 593–602.
+
+- Ryuichi Takanobu, Tianyang Zhang, Jiexi Liu, and Minlie Huang. 2019. A hierarchical framework for relation extraction with reinforcement learning. In
+AAAI.
+
+- Xiangrong Zeng, Daojian Zeng, Shizhu He, Kang Liu,and Jun Zhao. 2018. Extracting relational facts by an end-to-end neural model with copy mechanism.
+In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics, pages 506–514.
+---------------------------------------------------------------------------
+
+
+Typos, Grammar, Style, and Presentation Improvements
+---------------------------------------------------------------------------
+The paper is well-written and well-structured. Some glitches in the text:
+
+- "...objectives in different linguistic levels" -> "...objectives at different linguistic levels"
+- "...also dramatically improves the existing entity relation extraction task" -> "...also dramatically improve the existing entity relation extraction task"
+- "....the currently applied pre-trained objectives are insufficiently for the entity relation extraction." -> "....the currently applied pre-trained objectives are insufficient for the entity relation extraction." 
+- " A simple way to obtain more entity relation dataset automatically is..." -> " A simple way to automatically obtain entity relation datasets is..."
+- "...distantly supervised dataset (such as NYT) is not improved or even worse when it is fine-tuned on other entity relation dataset" -> "...distantly supervised datasets (such as NYT) is not improved or even gets worse when it is fine-tuned on other entity relation datasets"
+- "we introduce not only a new objective in span level, but also a new objective in span pair level..." -> "we introduce not only a new objective at span level, but also a new objective at span pair level..."
+- "Contrastive learning is a framework that build representations..." -> "Contrastive learning is a framework that builds representations..."
+- "...we first employ span encoder to extract five feature vectors regarding five spans." -> "...we first employ the span encoder to extract five feature vectors regarding the five spans."
+- "... be the corresponding representation computed by span encoder." -> "... be the corresponding representations computed by the span encoder."
+- "Learning powerful representation of span and span pair..." ->  "Learning powerful representations of spans and span pairs..."
+- "Inspired by recent SpanBERT.." -> "Inspired by the recent SpanBERT.." 
+- indictes -> indicates
+- "extract feature vectors regarding span s with span encoder" -> "extract feature vectors regarding span s with the span encoder"
+- epoches -> epochs
+- contruct -> construct
+- Telsa -> Tesla
+- "Some previous works (Luan et al., 2019; Wadden et al., 2019; Sanh et al.,2019) does not consider..." -> "Some previous works (Luan et al., 2019; Wadden et al., 2019; Sanh et al.,2019) do not consider..."
+- Table 3: "...pre-trainied on NYT"  -> "...pre-trained on NYT"
+- "..it achieves the 4.1 percent (exactly) improvement..." -> "..it achieves an absolute improvement of 4.1 units ..."
+- "Our “SPE” outperforms both in terms of relation performances, showing the better span and span pair representations learned by proposed objectives." -> "Our “SPE” outperforms both in terms of relation performance, showing the contribution of the span and span pair representations learned by the proposed objectives."
+- "pre-training corpus (line 3)..." -> "pre-training corpus (line 4)..."
+- "...achieves larger improvement in relation performances.." -> "...achieves larger improvement in relation performance.."
+- "We have several observations for results." -> "We have several observations."
+- "...of the “- CNN” also degenerates..." -> "...of the “- CNN” decreases sharply..."
+- "From the Table 5,.." -> "In Table 5,..."
+- "If we remove last MLP..." -> "If we remove the last MLP..."
+- "...both “BERT” and “SPE” significantly outperforms" -> "...both “BERT” and “SPE” significantly outperform"
+- "Early pipeline method suffers the error propagation problem.." -> "Early pipeline methods suffer from the error propagation problem.."
+- "To mitigate above question" -> "To mitigate the above issue"
+- ESpecially -> Especially
+- "we learn a better span pair representations with contrastive methods. to utilize a large set of negatives without requiring large training batches, we extend
+the MoCo framework to the proposed span pair objective." -> "we learn better span pair representations with contrastive methods, utilizing a large set of negatives without requiring large training batches and extending the MoCo framework with the proposed span pair objective." 
+- "information into pre-trained model." -> "information into pre-trained models." 
+- "... we introduce an span encoder and an span pair encoder." -> "... we introduce a span encoder and a span pair encoder." 
+- "...we can learn a better pre-trained encoders..." -> "...we can learn better pre-trained encoders..."
+---------------------------------------------------------------------------
+
+
+
+============================================================================
+                            REVIEWER #2
+============================================================================
+
+What is this paper about, what contributions does it make, and what are the main strengths and weaknesses?
+---------------------------------------------------------------------------
+This paper proposes a pre-training network architecture which introduces a span encoder and a span pair encoder to incorporate intra-span and inter-span information for jointly extracting entities and relations. In order to learn better encoders, three novel objectives, i.e. token boundary objective, span permutation objective and contrastive span pair objective, are proposed. Experiments on different datasets show improvements compared to strong baselines. The strengths of this paper are:
+1. A pre-training framework which can use span information as input;
+2. Three objectives are proposed to train the encoders;
+3. The proposed model achieves best results compared to baselines.
+
+The weaknesses include:
+1. The novelty of this paper is limited. Many components are extended from previous work such as SpanBERT, InfoWord, and Moco etc.
+2. The rationale in Table 4 (ablation test) about how each objective contributes to the results is not well explained. Sometimes, by adding some objectives or loss functions is more like a trick without strong and solid theory support, so it would be more sensible to explain why it works by investigating the network and doing error analysis.
+---------------------------------------------------------------------------
+
+
+Reasons to accept
+---------------------------------------------------------------------------
+1. A pre-training framework that can use span information
+2. Different objectives to better train the encoders
+---------------------------------------------------------------------------
+
+
+Reasons to reject
+---------------------------------------------------------------------------
+1. The paper has limited novelty in terms of basic system architecture where most crucial components are extended from previous work
+2. It has no reasonable explanation why these objectives and loss functions work from the theoretical point of view.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                         Reproducibility: 4
+                  Overall Recommendation: 4
+
+Questions for the Author(s)
+---------------------------------------------------------------------------
+1. In terms of three objectives, how do they individually contribute to the results? It's better to investigate more.
+2. With more span information, why SPE performs worse than SpanBERT in terms of Entity in Table 3? With more objectives and loss functions, SPE only achieves marginal improvements compared to SpanBERT, what is the reason behind this? Is some span information redundant? 
+3. In Table 4, after removing TBO, SPO and CSPO, entity obtains improvements compared to SPE, why is that? It is intuitive that the span information should be more useful for entity recognition.
+---------------------------------------------------------------------------
+
+
+
+============================================================================
+                            REVIEWER #3
+============================================================================
+
+What is this paper about, what contributions does it make, and what are the main strengths and weaknesses?
+---------------------------------------------------------------------------
+The paper presents an approach "Span and span Pair Encoder (SPE)" for the pre-training of token, span and span pair embeddings, which is then used and fine tuned in a joint model for Entity Recognition + Relation Extraction adapted from Sun et al, 2019a. Novel aspects of the proposed pre-training approach are the support for encoding span pairs (used for relation classification) that is based on contrastive learning with Momentum Contrast (MoCo), and a different objective function (predict span permutation) to train the span encoder. Training data may be unsupervised - i.e., random text spans + random spans from same sentence / different sentences - or supervised - i.e., coming from ground truth data for entity recognition and relation extraction, possibly obtained via distant supervision. The authors train and evaluate their pre-training approach both in an unsupervised or distantly supervised (wrt. NYT dataset) setting, on the ACE05 and SciERC datasets and against several !
+ state-of-the-art approaches, showing that its unsupervised version achieves state-of-the-art performance in relation extraction (but worse performance on Entity Recognition). Pseudo-code for the pre-training procedure is provided as supplemental material.
+
+Strengths:
+
+S1. The encoding of span pairs, which is here used for relation extraction but can be possibly used in other relational tasks (e.g., coreference resolution).
+
+S2. The support (and ideas for) unsupervised pre-training, which is shown being as effective as (or even more) than supervised pre-training using noisy distant supervision.
+
+S3. Solid relation extraction performance, which is significant considering distant supervision is not even used by the best proposed model variant.
+
+Weaknesses:
+
+W1. The fine-tuned model used for Entity Recognition + Relation Extraction does not leverage all the supervision data (e.g., entity coreference links) as the state-of-the-art models used in the comparison, so it would be interesting to see if, using such additional information, also state-of-the-art performance on Entity Recognition would be achieved as hypothesized by authors.
+
+W2. Some confusion in §4.1 when commenting Tables 3 and 4, which seem not to match with main text (see "typos, grammar, and style") -> easily addressable
+
+Post-rebuttal update:
+
+I thank the authors for their response. I appreciate the clarifications provided and the effort being put by authors to carry out additional experiments and analyses to enrich the paper. I thus confirm my acceptance recommendation.
+---------------------------------------------------------------------------
+
+
+Reasons to accept
+---------------------------------------------------------------------------
+The encoding of span-pairs (strength S1) is novel while the unsupervised pre-training setting (strength S2) makes the approach appealing from an application point of view.
+---------------------------------------------------------------------------
+
+
+Reasons to reject
+---------------------------------------------------------------------------
+For a more fair (wrt. their approach) and even more informative comparison, the authors could have used a more elaborate Entity Recognition + Relation Extraction model (weakness W2), although I find reasonable that such a model may only likely further improve the obtained performance of SPE.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                         Reproducibility: 4
+                  Overall Recommendation: 4
+
+Questions for the Author(s)
+---------------------------------------------------------------------------
+Q1. If possible, it would be nice to assess the impact (if any) of the different span-level loss function wrt. the one used in SpanBERT. This can be achieved, e.g., by using the SpanBERT function in a new variant of SPE.
+---------------------------------------------------------------------------
+
+
+Typos, Grammar, Style, and Presentation Improvements
+---------------------------------------------------------------------------
+There are typos / inconsistencies reported next for authors' convenience. In general, I had a feeling that Tables 3 and 4 do not match their interpretation in the main text of §4.1 (as if some line was after removed/renamed in tables):
+
+T1. [§1, line 74] "Such universal pre-trained models ... dramatically improves" -> "improve"
+
+T2. [§1, line 77] "are insufficiently" -> "insufficient"
+
+T3. [§2, line 184] "MoCo ... do not update" -> "does not update"
+
+T4. [§3.1, line 245] "The word representation ... follow that of BERT" -> "follows"
+
+T5. [§3.1, line 255] "MLP (multi-layer perceptron)" -> acronym to be defined before in line 193
+
+T6. [§3.3, line 452] "contruct" -> "construct"
+
+T7. [§3.3, line 464] "Telsa" -> "Tesla"?
+
+T8. [§4.1, line 571] "GCN joint model(Sun et al., 2019a)" -> check spacing "model(" here and in the rest of the section
+
+T9. [§4.1, line 575] "BERT((Sahn ..." -> check spacing and double parenthesis
+
+T10. [§4.1, line 595] "line 3" -> should it be "line 4"?
+
+T11. [Table 4] "'BERT' is our method" -> there is no BERT line in the table -> I think SPE was meant here (as in caption of Table 3), but perhaps there is a missing BERT line
+
+T12. [§4.1, line 635] "line 3-6" -> maybe "line 2-4" in Table 4?
+
+T13. [§4.1, line 638] "3.9 points and 1.9 points" -> where exactly in Table 4?
+
+T14. [§4.1, line 644] "line 7" -> should it be "line 5"?
+
+T15. [§6, line 792] "and an span pair encoder" -> "a"
+---------------------------------------------------------------------------
+
+
+--

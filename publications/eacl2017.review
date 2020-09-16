@@ -1,0 +1,139 @@
+============================================================================
+EACL 2017 Reviews for Submission #190
+============================================================================
+
+Title: Large-scale Opinion Relation Extraction with Distantly Supervised Neural Network
+
+Authors: Changzhi Sun and Yuanbin Wu
+============================================================================
+                            REVIEWER #1
+============================================================================
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+
+                         Appropriateness: 5
+            Originality / Innovativeness: 4
+              Impact of Ideas or Results: 4
+                 Soundness / Correctness: 4
+      References / Meaningful Comparison: 4
+                                 Clarity: 4
+                           Replicability: 4
+                     Impact of Resources: 1
+                  Overall Recommendation: 4
+
+
+---------------------------------------------------------------------------
+Comments
+---------------------------------------------------------------------------
+
+The paper proposes a distantly supervised framework based on pattern matching
+and neural network classifiers. The result shows that the proposed model is
+able to achieve promising performances without any human annotations.
+
+The approach is innovative and produces quite good results. A few minor
+comments:
+- For the patterns used, is there a way to automatically generate them in order
+to get better coverage?
+- Is possible to align the tables/figures on page #8 better with the content on
+page #7 (via putting them on the same page)? It's hard to come back and forth
+to understand them.
+- The formats of references are not consistent, e.g,
+* F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel,
+* Maria Pontiki, Dimitris Galanis
+
+============================================================================
+                            REVIEWER #2
+============================================================================
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+
+                         Appropriateness: 5
+            Originality / Innovativeness: 3
+              Impact of Ideas or Results: 4
+                 Soundness / Correctness: 3
+      References / Meaningful Comparison: 4
+                                 Clarity: 4
+                           Replicability: 3
+                     Impact of Resources: 1
+                  Overall Recommendation: 3
+
+
+---------------------------------------------------------------------------
+Comments
+---------------------------------------------------------------------------
+
+The paper proposed a distantly supervised neutral network for large-scale
+opinion relation extraction. The idea is interesting. Extensive experiments
+have been to prove its effectiveness. Besides the paper is well written and
+easy to follow.
+
+However, I have following concerns and suggestions for the paper.
+(1) To handle multiword opinion expression in section 3.1, the author proposed
+two methods, which should be explained more. E.g, they would introduce some
+noise?        How useful they are? Any experiment results about them?
+
+(2) The authors should describe more about extracted patterns, e.g, how many
+patterns are used to train the neutral network; how is the data quality of the
+patterns.
+
+(3) How to handle coreference in the document, which is pretty common in
+reviews, e.g.,        “I bought a iPhone yesterday, it is very good.”
+
+(4) In table -5, when comparing “biLSTM+ LOBTR” with “biLSTM + OBT”, it
+seems that L and R does not help much for the results, sometime even worse. It
+would be better if the authors can discuss more about it.
+
+============================================================================
+                            REVIEWER #3
+============================================================================
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+
+                         Appropriateness: 5
+            Originality / Innovativeness: 4
+              Impact of Ideas or Results: 3
+                 Soundness / Correctness: 3
+      References / Meaningful Comparison: 4
+                                 Clarity: 2
+                           Replicability: 3
+                     Impact of Resources: 1
+                  Overall Recommendation: 2
+
+
+---------------------------------------------------------------------------
+Comments
+---------------------------------------------------------------------------
+
+Given a large number of unlabelled texts, this paper proposes an
+efficient distantly supervised framework based on pattern matching and neural
+network classifiers, for open domain opinion extraction. This paper
+incorporates the Bi-LSTM and CNN models to refer to distant information, which
+is interesting. The experiment also shows that it is effective. The
+experimental settings for comparison are described in details.
+
+There are some issues in this paper. First, authors try to extract relations
+without manual labels. However, in the USAGE corpus, the model trained by the
+gold standard is much stronger, which makes the proposed claim and framework
+weak. Second, there are no explanations about why they design the dependency
+path and the proposed model as described. Readers need more information about
+the motivation to appreciate the proposed model. Third, there is no explanation
+for many mentioned components. What is Lexical L? When do the authors use
+opinion expression classifier? For both training and testing or only one of
+them?
+
+In general, this paper in many parts, especially the approach section, is hard
+to follow and some descriptions are vague. Most important of all, information
+provided in this paper does not support its claim that the proposed approach is
+strong enough without manual labels.
+
+
+--

@@ -1,0 +1,159 @@
+============================================================================
+EMNLP 2018 Reviews for Submission #1048
+============================================================================
+
+Title: Extracting Entities and Relations with Joint Minimum Risk Training
+Authors: sun changzhi, Yuanbin Wu and Man Lan
+============================================================================
+                            REVIEWER #1
+============================================================================
+
+What is this paper about, and what contributions does it make?
+---------------------------------------------------------------------------
+This paper introduces a new paradigm for the combined entity/relation extraction problem. It proposes minimum risk training (MRT) as method to better share information between the entity decoder and the relation decoder. The paradigm sits between a pipelined architecture and an full joint decoder. The MRT technique optimizes the separate enity and relation decoders by looking at L_mrt, the overall loss of the full problem. The authors evaluated their system on the ACE05 anc NYT datasets. Their results show improvements over recent full joint decoder systems.
+---------------------------------------------------------------------------
+
+
+What strengths does this paper have?
+---------------------------------------------------------------------------
+The paper is complete and represents a detailed in-depth study. The paper feels very repeatable and the authors will provide their code.
+---------------------------------------------------------------------------
+
+
+What weaknesses does this paper have?
+---------------------------------------------------------------------------
+The specific approach is complex and requires study. The authors do not really give a good intuition about why the method works. Perhaps they could discuss some examples.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 3.5
+
+Questions for the Author(s)
+---------------------------------------------------------------------------
+How well does a pure pipelined approach work? It does not seem that you evaluated such a system.
+---------------------------------------------------------------------------
+
+
+Presentation Improvements
+---------------------------------------------------------------------------
+Perhaps some return to the new paradigm in the end of the paper.
+---------------------------------------------------------------------------
+
+
+
+============================================================================
+                            REVIEWER #2
+============================================================================
+
+What is this paper about, and what contributions does it make?
+---------------------------------------------------------------------------
+This paper explores joint entity and relation extraction by optimizing a minimum risk training objective, which provides a more direct linkage to the task evaluation metric (e.g., F1) than optimizing a more standard objective function such as the average of entity and relation log likelihood.  The minimum risk training objective is applied as a global constraint, which links the entity and relation decoders.  A recurrent neural network is used for the entity model, and a convolution neural network is used for the relation model, with features for the relation model being derived from the entity model.
+---------------------------------------------------------------------------
+
+
+What strengths does this paper have?
+---------------------------------------------------------------------------
+* the paper provides a thorough mathematical description of each component of the model.
+* a number of MRT objective functions are proposed and analyzed, in addition to a learned loss function.
+* experimental results are presented for other joint decoding systems, the neural network without MRT, joint and individual component MRT, the learned loss function and it’s ensemble with MRT.  this provides a clear picture of which components are driving performance.
+---------------------------------------------------------------------------
+
+
+What weaknesses does this paper have?
+---------------------------------------------------------------------------
+* there is no motivation provided for using the RNN+CNN network structure.
+* development of the learned loss function was a bit unclear and it’s relevance to MRT unexplained.
+* results for the NYT dataset are sparse compared with results presented for ACE05.  given the relative size difference in the datasets, the NYT dataset would seem to yield the more robust results.
+* it is not clear if the improvements in F1 associated with MRT are significant, and at what p-values.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 3.5
+
+Questions for the Author(s)
+---------------------------------------------------------------------------
+* the NN without MRT makes a strong contribution to overall performance.  since this seems to be “half the story”, what is driving performance of the NN without MRT model?
+* how is “non-negligible improvement” [line 590] substantiated, and is this MRT relative to NN or MRT with NN relative to state-of-the-art systems?
+---------------------------------------------------------------------------
+
+
+Presentation Improvements
+---------------------------------------------------------------------------
+* Figure 3 is a bit difficult to digest.
+---------------------------------------------------------------------------
+
+
+Typos, Grammar, and Style
+---------------------------------------------------------------------------
+* a word appears to be missing in “while keeps” in line 102
+---------------------------------------------------------------------------
+
+
+
+============================================================================
+                            REVIEWER #3
+============================================================================
+
+What is this paper about, and what contributions does it make?
+---------------------------------------------------------------------------
+This paper is about the task of joint learning to extract entities and relations. The main contributions of this paper are as follows: 1) it applies MRT (minimum risk training) in this task; 2) provide a novel way to incorporate light interactions between the entity model and the relation model, which outperforms the previous methods. 3) the authors claim that they will make the code public.
+---------------------------------------------------------------------------
+
+
+What strengths does this paper have?
+---------------------------------------------------------------------------
+The paper is well-written, although there are too many footnotes which I believe the authors would put into the body in the revised version.
+Overall, I enjoyed reading this paper. It has a detailed introduction of background knowledge and their MRT-based joint learning method; the experimental results also suggest the proposed method is effective. The application of MRT in this task is quite innovative, and the way of exploring automatic loss engineering is also a plus. The evaluation part is also comprehensive, especially for the ablation study of different sampling methods and loss functions.
+---------------------------------------------------------------------------
+
+
+What weaknesses does this paper have?
+---------------------------------------------------------------------------
+First of all, the authors claim that the proposed joint learning method is "a flexible and lightweight framework". However, the entity model and the relation model used throughout this paper are too simple. I suggest the authors should at least use BLSTM-CRF architectures (Lample et al 2016, Ma and Hovy 2017) for the entity model and try some other types of relation models for evaluation. Otherwise, the current evaluation can hardly support this method as a "flexible framework". Simply put, I expect more for the connections between this method with the current state-of-the-art sequence labeling methods and relation classification models so that we can regard the proposed method as a flexible framework. ( Please note that "a joint learning framework can perform well on top of the most basic models, so it must also perform well on more complicated models" is not rigorous at all.)
+
+Also, the method incorporates MRT which needs sampling from all possible outputs in the training process. The authors say it is lightweight, but it seems to be much more time-consuming than before. The evaluation section does not show the time of training and testing, comparing with Ren et al. 2017, which is another big weakness of this paper.
+
+More experimental results compared with existing entity models, relation models, and joint methods are needed. As for the presentation, the paper talks little about the intuition behind some model designs and choices, such as the sampling method and loss engineering, which makes the model less natural to me.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 3.5
+
+Questions for the Author(s)
+---------------------------------------------------------------------------
+What is the intuition of the sampling algorithm (Line 450~464)? The prob. 0.9/0.1 is fixed or tunned as a hyperparameter on dev data?
+
+What is the intuition of using a more complicated loss function? I am confused how you "learn" a loss function here (Line 212). Can I see it as just an augmented loss function based on specific outputs?
+
+Could you please explain more why you think MRT-based method can match evaluation metrics better in the testing mode? (Line 116) It needs more rigorous justification.
+---------------------------------------------------------------------------
+
+
+Presentation Improvements
+---------------------------------------------------------------------------
+The equations with triangles in Line 403 and 404 need more explanation.
+---------------------------------------------------------------------------
+
+
+Typos, Grammar, and Style
+---------------------------------------------------------------------------
+Some sentences are started with "But". (Line 108, 157)
+
+Line 181 "can not" -> cannot
+
+Line 748 "a augmented" -> "an augmented"
+---------------------------------------------------------------------------
+
+
+
+
+--

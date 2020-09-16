@@ -1,0 +1,58 @@
+Response to Review #1:
+Thanks for your valuable comments. 
+
++ About the SPE-DS model on NYT dataset, we think the possible reasons for poor performance are as follows.
+ 1. NYT and ACE05 (or SciERC) are heterogeneous (entity types and relation types are different),  which causes the discrepancy between the pre-training step and the fine-tuning step. While our proposed pre-training objectives do not depend on explicit entity types and relation types; 
+ 2. Distant supervision introduces a lot of noise, which degenerates the performances of the downstream tasks (line 87-96, 617-623). This is a negative transfer similar to (Sun and Wu, 2019) in multi-task setting (line 96).
+
++ About the evaluation of entity span and entity type, 
+ 1. our entity performance is inferior to (Sanh et al.,2019), (Luan et al.,2019), and (Wadden et al.,2019), which all introduce additional supervision signals in the fine-tuning step with the multi-task paradigm (line 579-582), while we **DO NOT** include any labelled datasets during pre-training; 
+ 2. compared to (Sanh et al.,2019), both (Luan et al.,2019) and (Wadden et al.,2019) consider all spans and cross-sentence contexts as well as introducing an external dataset(OntoNotes). Thus, (Luan et al.,2019) and (Wadden et al.,2019) achieve higher entity performance; 
+ 3. we will explore these possible factors that influence the entity performance in supplementary material (doing).
+
++ About table 4,  we will fix the calculation error (3.9, 1.9 -> 2.3, 2.1) in the text and add the result of BERT (done).
+
++ About SciBERT, we will include it in supplementary material (doing).
+
++ About the neural architecture adopted for fine-tuning, we derive from the architecture shown in Figure 4 in (Sun et al.,2019a). In addition, we add an attention mechanism in relation (span pair) encoder shown in Figure 2 (span pair level) in our paper. To be more clarity, we will provide a figure deploying the complete neural architecture in section 3.4 or supplementary material (done).
+
++ About qualitative evaluation and error analysis, we will report it in supplementary material, including 
+ 1. the performance for different entity types and relation types (done); 
+ 2. the impact of sentence length and the number of entities (done); 
+ 3. error analysis on some concrete examples (done).
+
++ About the statistical significance, we will perform statistical significance test on our results and report the significance level in the paper (doing).
+
+Thank you for pointing out typos, grammar errors, and missing references, we will carefully correct these issues (done).
+
+Response to Review #2:
+Thanks for the helpful comments.
+
++ About the novelty of our paper,  
+ 1. designing pre-training objectives from the perspective of inter-span and intra-span is the first attempt, which is ignored by existing pre-trained models; 
+ 2. we introduce contrastive learning into IE for the first time, and the adaptation of contrastive loss is not trivial; 
+ 3. the proposed pre-training method can be easily used in other relational tasks (e.g., coreference resolution, event extraction).
+
++ About the theoretical point of view, the first two objectives ("TBO" and "SPO") are straightforward, and the "CSPO" objective mainly is based on contrastive learning. In fact, there is a theoretical framework for analyzing contrastive learning [1]. We will include this reference to provide a more theoretical understanding. In this paper, we pay more attention to intuitive understanding (similar to InfoWord).
+[1] "A Theoretical Analysis of Contrastive Unsupervised Representation Learning". Sanjeev Arora, Hrishikesh Khandeparkar, Mikhail Khodak, Orestis Plevrakis, Nikunj Saunshi. (2019)
+
++ About the individual contribution of three objectives, the effectiveness of existing pre-trained models is mostly reflected by the performance on downstream tasks. Table 4 shows the results of the ablation experiments.  For the proposed three objectives, they are hierarchical in three levels. Removing low-level objectives (like "TBO" and "SPO") leads to a greater decline. One possible reason is that high-level objectives also rely on low-level representation and information. And we will make some error analysis to investigate individual contribution in supplementary material (doing).
+
++ About SPE and spanBERT, spanBERT outperforms SPE 0.7 points in entity evaluation, while SPE outperforms spanBERT 1.4 points and 1.0 point in two relation evaluation. Assuming the entity performance is same (i.e., replacing BERT with spanBERT), our relation performance could be more improved (see BERT and SPE). The final training objective may bias span objective or span pair objective, which leads to more improvement in relation performance than entity performance.
+
++ About removing "TOB", "SPO", and "CSPO", 
+ 1. in ACE05 dataset, the fluctuation of entity performance is really small (0.2), we think that these pre-trained models (such as BERT and SPE) have similar performance. Thus, we pay more attention to relation performance; 
+ 2. the "SPO" objective intuitively focuses more on the information of syntax structure and word order in the span, which may not help much in entity recognition. We guess that the contextual token representation may be more crucial for entity recognition.
+
+
+Response to Review #3:
+Thanks for the useful suggestions.
+
++ About leveraging all the supervision data, the multi-task paradigm is indeed a potential direction, we will leave it as our future work and explore more efficient methods to improve entity performance.
+
++ About Table 3 and 4, thank you for pointing out these errors and providing many useful suggestions, we will fix these errors according to your suggestions (done).
+
++ About the impact of the different span-level objectives, as we all know, pre-training is a time-consuming method, we will try different span-level objectives during pre-training as soon as possible and report results in supplementary material (doing).
+
+General Response to Reviewers:
+Thanks to the reviewers for their comprehensive and valuable comments!

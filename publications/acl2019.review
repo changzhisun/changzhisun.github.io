@@ -1,0 +1,154 @@
+============================================================================ 
+ACL 2019 Reviews for Submission #890
+============================================================================ 
+
+Title: Joint Type Inference on Entities and Relations via Graph Convolutional Networks
+Authors: Changzhi Sun, Yeyun Gong, Nan Duan, Ming Gong, Daxin Jiang, Shiliang Sun, Man Lan and Yuanbin Wu
+
+============================================================================
+                            META-REVIEW
+============================================================================ 
+
+Comments: This paper presents an approach for identifying entities and relations. It first uses a sequence labeling to identify entity spans, and then uses a novel graph convolutional network over a bipartite graph using both entities and relations as nodes. It reports state-of-the-art results on only one dataset (ACE05) for entity extraction. (The relation extraction component underperforms the SOTA, but is competitive.) They provide an ablation study showing the benefits of their approach.
+============================================================================
+                            REVIEWER #1
+============================================================================
+
+What is this paper about, what contributions does it make, what are the main strengths and weaknesses?
+---------------------------------------------------------------------------
+The paper deals with the type inference (for entities and their relations). It proposes a joint model for supervised learning, using GCN. The approach first automatically detects the entity spans with a sequence labeling, then it constructs entity-relation bipartite graph, with entity and relation nodes. The constructed graph is encoded by nodes embedding and  the multi-layered GCN is applied for a joint type inference.  
+Strengths:
+1. The paper well written.
+2. The paper introduces a novel model.
+3. The paper deals with two types of classification in one (joint) model.
+4. The proposed model performs very well.
+Weakness:
+1. The paper lacks complexity (and practical efficiency) comparative analysis for the proposed and state-of-the-art models. 
+2. It is not clear whether significance tests were applied for analyzing the performance differences. Some scores are very close.
+---------------------------------------------------------------------------
+
+
+Reasons to accept
+---------------------------------------------------------------------------
+The paper introduces a novel model, which is interesting, well performing and can be adapted to other NLP tasks.
+---------------------------------------------------------------------------
+
+
+Reasons to reject
+---------------------------------------------------------------------------
+The paper lacks complexity (and practical efficiency) comparative analysis for the proposed and state-of-the-art models. 
+It is not clear whether significance tests were applied for analyzing the performance differences. Some scores are very close.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 4
+
+Questions and Suggestions for the Author(s)
+---------------------------------------------------------------------------
+I'd like to see the comparative analysis of a complexity (and practical efficiency) for the proposed and state-of-the-art models. Because different models obtained very close scores, such analysis could be very helpful for a general recommendation. 
+I also propose to apply significance tests for analyzing the performance differences. Some scores are very close.
+Also, more discussion explaining the results would be helpful. For example, why GCN usually has better Precision, but lower Recall?
+---------------------------------------------------------------------------
+
+
+Missing References
+---------------------------------------------------------------------------
+None
+---------------------------------------------------------------------------
+
+
+Typos, Grammar, and Style
+---------------------------------------------------------------------------
+None
+---------------------------------------------------------------------------
+
+
+
+============================================================================
+                            REVIEWER #2
+============================================================================
+
+What is this paper about, what contributions does it make, what are the main strengths and weaknesses?
+---------------------------------------------------------------------------
+The paper studies the problem of relation extraction with a variant of graph convolution network. There are two main technical contributions: 1) use an auxiliary binary relation classification task to prune edges, 2) treat both entities and relations as nodes in a bipartite graph to perform joint tasks.
+
+[STRENGTHS]
+1. The proposed method achieves a new state-of-the-art for entity extraction on ACE05.
+2. Ablation study has been conducted to show the benefit of the dynamic graph construction.
+3. The proposed techniques are somewhat novel in the setting of relation extraction.
+
+[WEAKNESS]
+1. Experiments are only on one dataset ACE05, which is not sufficient to support the main claims of the paper. The authors should also present experimental results on NYT.
+2. The results are worse than Sun et al on relation extraction.
+3. While GCN is end-to-end, the binary relation classification task still requires separate training. It will be great to further streamline the process to be truly end-to-end.
+---------------------------------------------------------------------------
+
+
+Reasons to accept
+---------------------------------------------------------------------------
+1. The proposed method achieves a new state-of-the-art for entity extraction on ACE05.
+2. Ablation study has been conducted to show the benefit of the dynamic graph construction.
+3. The proposed techniques are somewhat novel in the setting of relation extraction.
+---------------------------------------------------------------------------
+
+
+Reasons to reject
+---------------------------------------------------------------------------
+1. Experiments are only on one dataset ACE05, which is not sufficient to support the main claims of the paper. The authors should also present experimental results on NYT.
+2. While GCN is end-to-end, the binary relation classification task still requires separate training. It will be great to further streamline the process to be truly end-to-end.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 3.5
+
+
+============================================================================
+                            REVIEWER #3
+============================================================================
+
+What is this paper about, what contributions does it make, what are the main strengths and weaknesses?
+---------------------------------------------------------------------------
+This paper proposed a framework for doing joint entity and relation extraction. The proposed method construct a bipartite graph on entities and relations. By introducing a new task of predicting whether relationships exist between entities, this approach can be extended to generating the bipartite graph dynamically. The authors then run graph convolutional networks(GCN) on the static or dynamic bipartite graph. The experiment is performed on one dataset ACE05 and it is compared with strong baselines. The proposed model outperforms previous state-of-the-art methods on entity extraction, and get a competitive result on relation extraction compared to the baseline. 
+ 
+The paper is well written and easy to follow, the proposed model is well motivated.  With the model’s dynamic graph generation, new insights can be learned in an interpretable way. But the model only evaluated on one dataset which makes the result not as impressive.
+---------------------------------------------------------------------------
+
+
+Reasons to accept
+---------------------------------------------------------------------------
+The motivation of the proposed method is well situated with the solid error analysis with performance numbers. The poor performance of the entity typing system indicates the need for a better typing system, by jointly training with the relation extraction system. 
+The experiments are carefully designed and careful analysis is done according to the experiment results. The analysis shows the effectiveness of the GCN in the complex setting, i.e multiple relations present in one sentence.
+---------------------------------------------------------------------------
+
+
+Reasons to reject
+---------------------------------------------------------------------------
+The proposed method only tested on one dataset (ACE05) which makes the result less impressive.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 4
+
+Questions and Suggestions for the Author(s)
+---------------------------------------------------------------------------
+The proposed model is making use of pre-trained embeddings, did the authors try contextualized embeddings such as ELMO or BERT? It might improve the results even more.
+---------------------------------------------------------------------------
+
+
+Typos, Grammar, and Style
+---------------------------------------------------------------------------
+L078: use \citet for citations
+L086: use \citet
+---------------------------------------------------------------------------
+
+
+--
