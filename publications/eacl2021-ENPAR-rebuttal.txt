@@ -1,0 +1,53 @@
+To reviewer1:
+Thanks for your positive comments. 
+
+To reviewer2:
+Thanks for the helpful comments.
+
++ About the quality of the entity annotations produced by spaCy,
+  1. Recalling existing methods incorporating entity information in the pre-training step, ERNIE (Zhang et al. (2019)) annotates entities with knowledge graphs (Wikidata). However, KGs are usually incomplete and cannot cover all entities and relations, such as new organization names or person names. Therefore, we decide to use a universal NER annotation tool, spaCy, to build a large-scale entity annotated corpus.
+  2. Spacy is a popular open-source library for advanced Natural Language Processing, which has been used for NER in many current works, such as SpanBert in entity masking strategy.
+  3. In this paper, we use model, [`en_core_web_md`](https://spacy.io/models/en#en_core_web_md), which trained on OntoNotes with GloVe vectors trained on Common Crawl, to annotate entities. This model can annotate 18 entity types (CARDINAL, DATE, EVENT, ...), and the performance on the OntoNotes dataset is quite competitive (86.27(P), 86.13(R), 86.20(F1)). Therefore, we think that the quality of the entity annotations produced by spaCy is high enough to inject entity-related information into the pre-trained model.
+
++ About the propagated error introduced by the NRE tool spaCy,
+  1. Firstly, our entity encoder focuses on achieving a contextual representation incorporating entity-related information. The parameters for decoding entity types are not included in the entity encoder. Moreover, we will randomly initialize these parameters for decoding entity types in the fine-tuning step, which can alleviate the inconsistency between the entity annotation in pre-training and that in fine-tuning. Meanwhile, it can reduce the influence of limited annotation errors. Finally, the experiments on the SciERC dataset (line 682-691) also verify our intuition.
+  2. Then, as aforementioned, the quality of the entity annotations is high enough in terms of pre-training.
+
+
++ About the hyperparameters and settings in the fine-tuning step,
+  1. We only tune the hyperparameters based on the entity and relation performance on the ACE2005 development set. Then we directly apply the same hyperparameters on the SciERC and NYT datasets.
+  2. We mainly search kernel size of CNN, the number of filters, the hidden size of MLP, the learning rate, and the warmup rate.
+  3. Some important hyperparameters are listed as follow,
+     + kernel size: [2, 3, 4]
+     + the number of filters: 100
+     + mlp hidden size: 256
+     + dropout: 0.1
+     + learning rate: 2.5e-5
+     + adam weight decay: 0.01
+     + warm-up rate: 0.2
+     + max epochs: 200
+  4. We will provide more detailed hyperparameters and settings in the supplementary material (done). 
+
+
+To reviewer3:
+Thanks for the useful suggestions.
+
++ About the datasets used in this paper,
+  1. Both ACE2005 and SciERC are annotated by humans, while NYT is a distantly supervised dataset, then both ACE2005 and NYT collect texts from newswire, while SciERC is from scientific papers. Moreover, the three datasets are widely used in prior works for entity relation extraction.
+  2. We think the three datasets cover different annotation types and different domains, which can effectively demonstrate the performance of our ENPAR model.
+  3. We will include more datasets in the future, such as ACE2004, Conll2004 (doing). Thanks for your advice.
+
+
++ About the error analysis and discussion on the model comparison,
+  1. We conduct many experiments but only report the results of some important experiments in limited space.
+  2. In supplementary material, we will report more experimental results and error analysis, such as 
+     + the F1 score with respect to the number of entities for each sentence (done).
+     + the F1 score with respect to the sentence length (done).
+     + the performance for different entity types and relation types (done).
+     + more case studies (done).
+
++ About the degeneration for the bucket of 4 relations per sentence in Figure 7(b), we check the results of sentences which contain 4 relations. We find that the number of `PHYS` relation is much more than that of other relations, while the performance of our ENPAR model in `PHYS` relation is quite poor compared with other relation types like `ORG-AFF`. Therefore, the performance sharply drops for the bucket of 4 relations per sentence. However, from Figure 7(b), we can find that our ENPAR model achieves superior performance in the situation that sentence contains more than one relation. It demonstrates that our ENPAR model can effectively capture the interactions between multiple relations in a sentence.
+
+General Response to Reviewers:
+Thanks to the reviewers for their comprehensive and valuable comments!
+

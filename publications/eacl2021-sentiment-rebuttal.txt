@@ -1,0 +1,75 @@
+Response to Review #1:
+Thanks for your helpful comments and suggestions.
+
+How is BERT(d) calculated?
+
+- We use CLS-tokens to represent sentences in d
+About the scalability of our approach
+- yes, the running time depends on the sentence length. In practice, we consider a window  of 10 around the target word.
+- through masking, the computation of discrete perturbations could be batched (i.e., a batch of forward computation).
+
+About the attention scores
+
+- thanks for the suggestion, it is an very important future work to check whether attention scores exhibit similar or different behaviours comparing with perturbation methods.
+
+About templates (why not use sentiment scores from step 1?)
+
+- in this step (determining an aspect-opinion pair's polarity), we obtain a polarity score from scratch (independent of individual sentences).
+- it is also possible to take sentiment scores from step 1 as evidence of the final score. Thanks for the suggestion.
+Statistics of datasets and overlap of discrete/continuous perturbation
+- We will add more details on these points in the final version.
+
+About the number of reviews for evaluation
+
+- Since we have to select the samples that do not contain the general words but contain opinion words in our commonsense lexicon, the number of reviews that meet this constraint are limited. We would like to extend the evaluation set in the future.
+
+Response to Review #2:
+Thanks for your helpful comments and suggestions.
+
+About the application on other domains
+
+- our method has two basic assumptions: 1) it is relatively cheap to get document-level opinions; 2) given a target, there is a consensus of opinions on it (e.g., hot pizza is always better than cold pizza).
+- regarding other domains (e.g., news and opinion editorials), we think that the general framework proposed in this paper is still applicable, but it may be not like reviews that the distant sentiment labels. It might also be less consensus among what is good and what is bad on public events (e.g., big government or small government).
+- we would make this point more clear in the final version. Thanks for the helpful suggestions.
+
+For verb/noun opinion word
+
+- we do *NOT* constrain the POS of opinion words. We select words according to their importance scores.
+- the templates are applied to evaluate polarity of an opinion word (not for extracting the opinion words)
+- the templates can handle collocations of verb/noun opinion words and their target words. For example, template 2 could be instantiated to "ignore service" when applied to a verb opinion word "ignore".
+- From the experiments, we find most of the opinion words are adjectives and some words are verbs and nouns (e.g., sucks, ignored, five in Table 5).
+
+About the baselines
+
+- for baselines from aspect-based sentiment analysis, they are usually deeply coupled with manual annotations, which makes them not directly comparable to our unsupervised methods (line 81-89).
+- we include PMI baseline from (Hamilton et al 2016) because PMI is a standard method for automatic lexicon acquisition (not because we use the same datasets). In fact, pioneer work on sentiment analysis (Turney 2002) has applied PMI-based methods.
+- we can not find the dataset used in (Zhao et al 2012) (the link to their dataset in the paper is invalid).
+Comparing with (Wu et al. 2019)
+- They also aim to construct a target-specific sentiment lexicon. However, both NLP preprocessing pipelines (e.g., parsing, POS tagging) and linguistic rules are integrated into their algorithm. They also use external resources like the general sentiment lexicon and thesaurus which are not required in our algorithm. In other words, we focus on building context-aware lexicons by minimizing the requirement of annotations and handcrafted external resources. We would add a discussion and clarify the differences in the latest version.
+
+About using different classifiers in strategy 1 and 2
+
+- our main goal is to extract a target-aware opinion lexicon rather than building a SOTA sentiment classifier.
+- we design the two strategies to test the extracted lexicon in different scenarios (BERT or BiLSTM, removing the lexicon from inputs or adding the lexicon as classification features).
+- though it is possible to evaluate our lexicon using the same classifier in the two strategies, and we will try to add additional experiments, thanks for the suggestion.
+
+About the error analysis
+
+- We will provide a detailed error analysis in the revised version.
+- We select the samples that do not contain general sentiment words but contain the commonsense words in our extracted lexicon.
+
+About the human evaluation
+
+- yes, we use crowdsourcing of non-experts since the sentiment labels are easy to infer.
+
+Response to Review #3:
+Thanks for your helpful comments and suggestions.
+
+About error analysis with document-level sentiment classifier
+
+- We verify the effectiveness of distant supervision by evaluating the accuracy of the sentiment classifier. The results show that our distant supervision performs well on sentiment classification (line 578-588).
+- We will add additional experiments about how much the errors from document-level sentiment classifier affect the performance of target-aware sentiment lexicon mining process.
+
+About the additional related references
+
+- thanks for pointing out additional references.

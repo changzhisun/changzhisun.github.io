@@ -1,0 +1,106 @@
+============================================================================ 
+EACL 2021 Reviews for Submission #1097
+============================================================================ 
+
+Title: ENPAR:Enhancing Entity and Entity Pair Representations for Joint Entity Relation Extraction
+Authors: Yijun Wang, Changzhi Sun, Yuanbin Wu, Hao Zhou, Lei Li and Junchi Yan
+============================================================================
+                            META-REVIEW
+============================================================================ 
+
+Comments: The paper proposed a pre-trained and fine-tuned strategy for jointly extracting entities and their relations from texts. The paper is well-structured and easy to follow. The idea is interesting. Although it has some novelty, I thinks this paper could be accepted.
+
+============================================================================
+                            REVIEWER #1
+============================================================================
+
+What is this paper about, what contributions does it make, what are the strengths and weaknesses, what are the questions for the authors?
+---------------------------------------------------------------------------
+This paper introduces a pre-trained and fine-tuned strategy for joint entity and relation extraction. They design four pre-trained methods: masked entity typing, masked entity prediction, adversarial context discrimination and permutation prediction, which are novel in my opinion, especially for the last two. Experimental results show that their methods are effective, compared with two strong baselines.
+
+Strengths:
+The proposed pretrained tasks are interesting and novel in my opinion.
+---------------------------------------------------------------------------
+
+
+Reasons to accept
+---------------------------------------------------------------------------
+The idea is interesting, and results are convincing.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 4
+
+
+============================================================================
+                            REVIEWER #2
+============================================================================
+
+What is this paper about, what contributions does it make, what are the strengths and weaknesses, what are the questions for the authors?
+---------------------------------------------------------------------------
+This paper proposes a pretrained method for jointly extracting entities and relations in a pipeline setting.
+The pretrained method consists of an entity encoder with context and an entity pair encoder with context and is pretrained using four designed training objectives.
+The results on ACE2005, SciERC, and NYT show the effectiveness of the method.
+1. What is the quality of the entity annotations produced by Spacy? And how to deal with the propagated error?
+2. What are the hyperparameters and settings when finetuning the three encoders in the ACE2005, SciERC, and NYT datasets?
+---------------------------------------------------------------------------
+
+
+Reasons to accept
+---------------------------------------------------------------------------
+This paper is well-structured and simple to follow.
+The results on ACE2005, SciERC, and NYT show the effectiveness of the proposed method.
+---------------------------------------------------------------------------
+
+
+Reasons to reject
+---------------------------------------------------------------------------
+The details about how to finetune the sentence encoder, entity encoder, and entity pair encoder in ACE2005, SciERC, and NYT are not clear.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 3.5
+
+
+============================================================================
+                            REVIEWER #3
+============================================================================
+
+What is this paper about, what contributions does it make, what are the strengths and weaknesses, what are the questions for the authors?
+---------------------------------------------------------------------------
+This work proposes an enhanced neural network architecture as well as additional pre-training objectives for the task of joint entity relation extraction. The proposed approach comes with data argumentation through existing NER annotation tools.
+
+Strengths:
+
+This paper proposes additional pre-training objectives to improve joint entity relation extraction, which reduces the need of manually labeled data for coreference resolution and event extraction. 
+
+To incorporate entity pair information during pre-training, the proposed network architectures add an entity encoder and en entity pair encode in addition to universal pre-trained models. 
+
+The paper includes a thorough survey on related work.
+
+Weaknesses:
+
+It would be best to add experiments on more datasets to demonstrate a consistent and significantly improved performance. 
+
+More error analysis and discussion on model comparison could also help elaborate the success and failure of the proposed method for the task of joint entity relation extraction. For example in Figure 7(b), why the proposed method underperforms for the bucket of 4 relations per sentence?
+---------------------------------------------------------------------------
+
+
+Reasons to accept
+---------------------------------------------------------------------------
+The proposed method and results on three widely used datasets could help researchers further explore the pre-training paradigm for the task of entity relation extraction.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 3.5
+
+--

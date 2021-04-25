@@ -1,0 +1,177 @@
+============================================================================ 
+EACL 2021 Reviews for Submission #257
+============================================================================ 
+
+Title: Is ``hot pizza" Positive or Negative? Mining Target-aware Sentiment Lexicons
+Authors: Jie Zhou, Yuanbin Wu, Changzhi Sun and Liang He
+============================================================================
+                            META-REVIEW
+============================================================================ 
+
+Comments: The paper proposes a novel technique for automatically generating a target-aware sentiment lexicon using only document-level sentiment labels. It clearly describes the problem and provides motivation for the task. The lexicon helps significantly improve the results of unsupervised opinion extraction task. The quality of the lexicon is evaluated using both manual and automatic methods. The paper also proposes an interesting way of automatic evaluation of the lexicon using documents that do not contain general sentiment lexicon words.
+
+============================================================================
+                            REVIEWER #1
+============================================================================
+
+What is this paper about, what contributions does it make, what are the strengths and weaknesses, what are the questions for the authors?
+---------------------------------------------------------------------------
+The paper introduces a novel approach for generating context-based sentiment lexicons. Given a target aspect of product / service their approach seeks to find words representing (subjective) evaluations of this aspect and their polarity.  The approach is based on the BERT language model and is structured into three steps – target-opinion approximation, importance score calculation and polarity inference. Evaluation is performed using reviews of electronic articles (Amazon) and restaurants (Yelp). Results indicate the suitability of the approach.
+
+In my view, the work takes care of an important problem for automatic sentiment classification – identifying the polarity of a sentiment-bearing word concerning a specific product aspect.  The paper nicely introduces the problem setting and the motivation behind their work (i.e. the polarity of a sentiment word can vary in respect to the target aspect (even in a single domain)) and highlights the necessity for target-dependent sentiment lexicons. The work is essentially well structured and written in a comprehensible and (in general) clear manner. Evaluation method and results seem conclusive.
+
+However, the a few issues in the paper which need more explanations / clarifications and enhancements:
+
+- Section 3: How is BERT(d) calculated? Using CLS-Token or an aggregation over the word representations in the last layer(s)?
+
+- Section 4: The authors should also consider and discuss the scalability of their approach in more detail. For example, computation costs for calculating the discrete pertubations maybe very high. In a naïve way, we have to remove each word from each sentence once, i.e. the runtime increases not only linear to the number of sentences. This could (may) limit the scalability significantly.
+
+- Section 5: It would be interesting to know whether the authors also considered to use the attention scores from BERT to calculate word importance. There are mixed findings in the NLP community about whether or not attention can be used for explanations. Do the important words of the author’s approach align with attention scores?
+
+- Section 5: Here the authors could give a more comprehensible motivation for their template approach. Why not using the sentiment scores from step 1? For me, the template approach seems to be used to circumvent the problem of mixed evaluations in one sentence. Nonetheless, it would be nice to see whether there is a difference between template approach vs. scores from step 1 in the evaluation. 
+
+- Section 6.1: The section would profit from more statistical details: Statistics of the used evaluation corpora, number of target words from SemEval and the number of entries in the extracted lexicon. This would contribute to a better assessment of the evaluation.
+
+- Section 6.2.: It would be interesting to see, whether discrete and continuous perturbation find the same entries. What’s the overlap of the two methods?
+
+ - Section 6.3: Here it is not apparent to me why only such a small number of reviews (3500) is selected for evaluation. Especially for strategy 2, the amount of test samples is quite small (500), which makes it difficult to interpret the results correctly.
+---------------------------------------------------------------------------
+
+
+Typos, Grammar, Style and References
+---------------------------------------------------------------------------
+-
+---------------------------------------------------------------------------
+
+
+Reasons to accept
+---------------------------------------------------------------------------
+The work presents a novel technique for generating target-aware sentiment lexicons in an unsupervised manner and thus represents an important contribution to a more precise, fine-granular analysis of opinions / subjective statements in reviews. Moreover, the approach is not tied to a specific domain and can be adapted to other domains with reasonable efforts, which makes it suitable for a broader scope of applications.
+---------------------------------------------------------------------------
+
+
+Reasons to reject
+---------------------------------------------------------------------------
+-
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 4
+
+
+============================================================================
+                            REVIEWER #2
+============================================================================
+
+What is this paper about, what contributions does it make, what are the strengths and weaknesses, what are the questions for the authors?
+---------------------------------------------------------------------------
+The paper examines a method for establishing the polarity of opinion word-target collocations. The authors arguie that this is necessary and the  assumption that opinion words have a stable polarity within a domain is not warranted.
+
+The authors use a  “perturb-and-see” method on sentences containing targets that compares the polarity of the original sentence with the polarity of a sentence from which some word has been removed to identify relevant sentiment words . To do so they use an off-the-shelf, BERT-based document-level sentiment classifier. Evaluation is done both intrinsically and extrinsically. The approach uses no manual annotations (except the 'found' document-level annotations on review sites.)
+
+I think the authors should discuss somewhat the intended scope of their work: is it applicable only to the review domain or could it generalize to e.g. news and opinion editorials?  Also, given the templates the authors use (predicative clauses with opinion word o as predicate and modifier-head phrases with o as modifier),  they seem to think only of adjectives as opinion words. What about verbs and nouns as opinion words? Do these figure at all in the evaluation and the training, and how do you perform on these word classes?
+
+Given that the focus seems so much on the product review use case for polarity classification, I find the intrinsic evaluation comparing to the PMI-based method used by Hamilton et al 2016 odd. That approach uses a very different notion of domains (e.g. politics vs sport) than what's relevant in the review domain. Also, unlike the authors', it's not an approach focused on opinion word-target combinations. For that reason, I would instead have expected to see a baseline from review mining / aspect-based sentiment analysis.  Curiously, although the authors mention (Zhao et al., 2012) as "[t]he most related work to us" in section §7, they don't compare to that work.
+
+Along these line the following reference should probably be discussed as it seems very pertinent:
+
+@article{WU2019285,
+title = "Automatic construction of target-specific sentiment lexicon",
+journal = "Expert Systems with Applications",
+volume = "116",
+pages = "285 - 298",
+year = "2019",
+issn = "0957-4174",
+doi = "https://doi.org/10.1016/j.eswa.2018.09.024",
+url = "http://www.sciencedirect.com/science/article/pii/S0957417418306018",
+}
+
+
+Regarding the downstream tasks: the two "strategies" seem to involve different classifiers. Why not use the same? And: do the classifiers in question represent the state of the art? I.e. when the authors report that L_c + BiLSTM outperforms BiLSTM on strategy 2, it doesn't tell me whether there isn't another classifier out there that is better on the data without injection of knowledge from the extracted lexicon. So I would at least want to know if I should consider BiLSTM to be state of the art for the task.
+
+Regarding the downstream evaluation in Strategy 2, it would have been interesting to have an error analysis: does your lexicon only result in additional correct cases or does it also result in wrong classifications where the system without the lexicon is correct? 
+Also, how often does the lexicon come into play at all? That is, of the 1500 samples how many contain a t-o combination that is known to your lexicon?
+
+" To inject our extracted lexicon (t, o, p), we concatenate p to the input of BiLSTM if t and o occur. "
+
+
+Regarding the human evaluation: please say a bit more about the annotators. Given the number (10), it sounds as if the authors used crowdsourcing of non-experts.
+---------------------------------------------------------------------------
+
+
+Typos, Grammar, Style and References
+---------------------------------------------------------------------------
+line 460: we test it's the performance -> we test its performance
+---------------------------------------------------------------------------
+
+
+Reasons to accept
+---------------------------------------------------------------------------
+* The paper is overall clear and understandable.
+* The results obtained are positive and seem to beat the state of the art,.
+* The downstream evaluation on documents that do not contain general sentiment lexicon words but nevertheless contain opinions reliably recognizable to humans is a nice setup.
+---------------------------------------------------------------------------
+
+
+Reasons to reject
+---------------------------------------------------------------------------
+* I am not sure how informative the evaluation setup is. (see discussion above)
+* Likewise, I am not clear if the section on related work situates this paper against the most relevant related work.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 4
+
+
+============================================================================
+                            REVIEWER #3
+============================================================================
+
+What is this paper about, what contributions does it make, what are the strengths and weaknesses, what are the questions for the authors?
+---------------------------------------------------------------------------
+The paper studies the problem of mining target-aware sentiment lexicon form review corpus. The work proposes a “perturb-and-see” method to extract target-aware sentiment lexicons utilizing the document-level sentiment labels. The proposed method first starts from a target word and extracts sentiment words from its local context and then, perturb context words to see how the
+sentiment of the target word changes by observing the behavior of a well-trained document-level sentiment classifier.  Empirical analysis have been conducted on two online product domain review corpus to show the effectiveness of the approach. The work further uses the lexicon to solve the task of unsupervised opinion relation extraction to analyze the usefulness of the approach.
+
+Overall, the paper is clearly written and well-organized. The problem of mining target-aware sentiment lexicon form review corpus is a very relevant and important for aspect-based sentiment analysis (ABSA) task. Specifically, the idea of “perturb-and-see” method is quite interesting and useful. However, one of the limitation of the approach is that the extraction performance highly dependent on how well document-level sentiment classifier is trained. 
+
+Questions:
+
+1. How much the errors form document-level sentiment classifier affects the performance of target-aware sentiment lexicon mining process? An analysis would be useful.
+---------------------------------------------------------------------------
+
+
+Typos, Grammar, Style and References
+---------------------------------------------------------------------------
+Additional Related References
+
+1. Adapting information bottleneck method for automatic construction of domain-oriented sentiment lexicon (WSDM 2010)
+2. Detecting Domain Polarity-Changes of Words in a Sentiment Lexicon. arXiv preprint arXiv:2004.14357 (2020).
+3. Lifelong learning memory networks for aspect sentiment classification (BigData 2018).
+---------------------------------------------------------------------------
+
+
+Reasons to accept
+---------------------------------------------------------------------------
+1. Proposes a method to mine target-specific sentiment lexicon that only requires document-level sentiment labels
+2. Empirical evaluation on real-world dataset shows the method is effective.
+---------------------------------------------------------------------------
+
+
+Reasons to reject
+---------------------------------------------------------------------------
+1. Extraction performance seems to be sensitive to the performance of document-level sentiment classifier.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 4
+
+-- 
