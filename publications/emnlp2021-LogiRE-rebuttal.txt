@@ -1,0 +1,79 @@
+Response to Review #1:
+
+Thanks for your valuable comments and suggestions.
+
+Q1: Will it only works in document-level RE? How about results in sentence-level RE?
+
+A1: Theoretically, LogiRE is also applicable for sentence-level RE. The main advantage of learning logic rules is that logic rules capture **long-range dependencies of multiple relations** in a document. There may be multiple correlated relations in a sentence, so logiRE can still apply. Compared to sentence-level RE, document-level RE is more challenging because of the **longer input text**, the **larger number of relations**, and the fact that **a relation may be scattered across multiple sentences**.
+For example, ACE05(sentence-level RE dataset) has an average of **0.49** relations per sentence, while the dataset we use DocRED has an average of **12.46** relations per document and DWIE has an average of **24.40** relations per document. Thus we choose document-level RE to evaluate our method. Thanks for the valuable suggestion, we will experiment on sentence-level datasets in the future, including ACE05, ACE04, SciERC, and so on.
+
+Q2: Results for DocRED.
+
+A2: Please check general response A1.
+
+Response to Review #2:
+
+Thanks for your valuable feedback!
+
+Q1: The sizes of the datasets are relatively small.
+
+A1: Sorry for the misunderstanding about the size of the dataset. In fact, the datasets we use contain **10k+** triples, which is enough to train a neural relation extractor. For example, DWIE contains **19,493** triples and DocRED contains more than **50,503** triples (Table 1). While ACE05 (traditional sentence-level RE dataset) only contains **7,117** triples.
+
+Q2: Mathematical formulas for ign F1 and logic evaluation metrics.
+
+A2: Sorry for the confusion, we list the mathematical formulas below and will add them in the text.
+- **precision** = #{correctly extracted triples} / #{extracted triples}
+- **ign recall** = (#{correctly extracted triples} - #{correctly extracted triples also existing in train split}) / (#{gold triples} - #{gold triples also existing in train split})
+- **ign F1** = 2 * precision * ign recall / (precision + ign recall)
+- **logic** = #{correct head atoms in the instantiated paths} / #{instantiated paths with body atoms match the gold rules}
+
+Q3: Grammatical issues.
+
+A3: Thanks for pointing out typos! We’ll fix it!
+
+Q4: Results for DocRED.
+
+A4: Please check general response A1.
+
+Response to Review #3:
+
+Thank you for your valuable comments.
+
+Q1: The synergy between the rule generator and the relation extractor.
+
+A1: Thanks for your careful review!  In fact, the iterative approach can amplify the positive as well as the negative. We believe LogiRE's positives will prevail over its negatives based on two reasonable assumptions.
+1. When we know the annotation of the relation, we can more easily infer the correct logic rules.
+2. The correct logic rules can help the relation extractor.
+   
+In the initial stage, the rule generator may produce random rules. If assumption 1 holds, then the rule generator can be improved by the posterior inference (given the annotation of the relation rather than prediction). When the rule generator is improved, according to assumption 2, the relation extractor is also improved. Thus, positive feedback is formed. 
+Actually, as long as these two assumptions hold **approximately**, positive feedback will be greater than negative feedback. The final experimental results show that LogiRE can further improve the performance of relation extraction, which also verifies the reasonability of two assumptions.
+
+Q2: Maybe use the example in Fig.1 to illustrate the definition and formulation.
+
+A2: Thanks for your kind advice. We will combine the example with our approach overview in Sec. 3.1 to make it clear.
+
+Q3: Missing reference for inferring Bayesian networks.
+
+A3: Thanks for pointing out this. We will add more discussion and comparison with previous efforts on probabilistic models.
+
+Thanks for pointing out the grammatical issues and providing constructive advice on presentation improvements. We will revise our paper accordingly.
+
+Q4: Grammartical issues.
+
+A4: Thanks for pointing out the grammartical issues and providing the constructive advice on presentation improvements. We will revise our paper accordingly.
+
+General Response:
+
+We thank all reviewers for your constructive feedback!
+
+Q1: Results on the DocRED dataset (Reviewer1 & Reviewer2).
+
+A1: We are sorry for the missing test set results on DocRED, which are shown below:
+
+- GAIN-LogiRE, dev F1: 60.62(+0.63), dev ign F1: 58.47(+0.65), test F1: 60.61(+0.54), test ign F1: 58.62(+0.69)
+- ATLOP-LogiRE, dev F1: 61.33(+0.44), dev ign F1: 59.17(+0.15), test F1: 61.45(+0.32), test ign F1: 59.48(+0.34)
+
+The trend of dev and test results on DocRED is similar. We will include it in the main text and add more discussion in the appendix. Actually, we choose DWIE as the primary dataset and only report the results of DocRED. The reasons are as follows.
+- There are many missing annotations in the DocRED dataset. For some golden logic rules, such as father(h,z)&spouse(z,t)->mother(h,t), we count the percentage of errors (Table 6). Overall, about **20%** of the annotations **DO NOT** satisfy the golden logic rules.
+- For each document, DocRED has an average of **201.5** tokens and DWIE has an average of **624.8** tokens. The main advantage of LogiRE is that logic rules could capture long-range dependencies of multiple relations. 
+- DWIE dataset provides golden logic rules, so we can evaluate logical consistency. But DocRED does not.

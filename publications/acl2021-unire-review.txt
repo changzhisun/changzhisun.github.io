@@ -1,0 +1,252 @@
+============================================================================ 
+ACL-IJCNLP 2021 Reviews for Submission #2436
+============================================================================ 
+
+Title: UniRE: A Unified Label Space for Entity Relation Extraction
+Authors: Yijun Wang, Changzhi Sun, Yuanbin Wu, Hao Zhou, Lei Li and Junchi Yan
+============================================================================
+                            META-REVIEW
+============================================================================ 
+
+Comments: This paper proposes a joint model for entity recognition and relation extraction, where the two tasks are combined into a shared label space and learned by a shared biaffine model. An approximate decoding algorithm is used to decode the final structure. The proposed system has moderate improvements over previous state of the art on a few benchmarks (ACE04, ACE05, and SciERC), while achieving 10x speed up.
+
+The reviewers appreciate the novelty and effectiveness of the idea. Although the improvements are modest (as R1 pointed out, it’s not clear whether the improvements were statistically significant), the speed/efficiency gain is quite nice. The authors have agreed to include statistical significance tests in the paper.
+
+============================================================================
+                            REVIEWER #1
+============================================================================
+
+The core review
+---------------------------------------------------------------------------
+The paper considers joint entity recognition (ER) and relation extraction (RE), for which it proposes a new solution based on sharing label spaces info for both tasks. It does so through a single word x word matrix using diagonal cells/blocks to indicate entity types and off diagonal cells for relations between the words (or spans).
+
+Strengths:
+- focuses on core NLP tasks
+- simple but novel idea, well executed (the idea is original and breaks the traditional way of thinking of entity and relation labels separately)
+- the method is competitive with other joint as well as pipeline models for ER+RE
+- generally well presented; reasonably insightful analysis
+
+Weaknesses:
+- not clear whether performance increase/difference with other methods is really (statistically?) relevant
+- not clear whether the method also works for multilabel cases, e.g, where entities could participate in multiple relations
+- some lack of clarity, some of the notation is inconsistent (ex: e.span vs span). The authors also provide claims without any explanation or further analysis (e.g., lines 547-549,573; 391-394; 394-395,411; 781-786). Some of the examples are poorly explained (e.g., it is not clear what authors want to show in Figure 6) and not properly linked to the story of the paper.
+- does not cite nor compare to relevant related work that outperforms the newly proposed model for some of the tasks/datasets. (e.g, joint span-based models such as DyGIE (Luan et al. 2019), DyGIE++ (Wadden et al. 2019), SpERT (Eberts et al. 2019) are completely omitted from the analysis and related work.)
+---------------------------------------------------------------------------
+
+
+Reasons to Accept
+---------------------------------------------------------------------------
+- New approach for joint entity and relation extraction, unifying their label spaces
+---------------------------------------------------------------------------
+
+
+Reasons to Reject
+---------------------------------------------------------------------------
+- Uncomplete analysis, claims that are not backed up by evidence. 
+- Unclear statements, lack of additional explanation and coherence in the story. 
+- Missing some of the key state-of-the-art work when comparing results and analysis.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 3.5
+
+Questions for the Author(s)
+---------------------------------------------------------------------------
+- Is the method limited to selecting a single label per candidate entity, same for relation? Or can an entity participate in multiple relations?
+---------------------------------------------------------------------------
+
+
+Missing References
+---------------------------------------------------------------------------
+- https://doi.org/10.1016/j.eswa.2018.07.032  seems also quite relevant for joint entity+relation extraction
+- further, for span-based joint entity+relation extraction: 
+  + https://www.aclweb.org/anthology/N19-1308.pdf (DyGIE)
+  + https://www.aclweb.org/anthology/D19-1585.pdf (DyGIE++)
+  + https://arxiv.org/abs/2009.12626
+---------------------------------------------------------------------------
+
+
+Typos, Grammar, Style, and Presentation Improvements
+---------------------------------------------------------------------------
+- Abstract:
+  + using only half number of parameters -> using only half the number of parameters
+- Fig 1: 
+  + relaion -> relation
+- Sec 1
+  + pipeline (which has lower performances) -> pipeline, which attains lower performance 
+  + only half of parameters -> only half the number of parameters
+- Sec 2:
+  + PHYS relation -> the PHYS relation
+- Sec. 3
+  + results in dependency parsing task -> results in the dependency .... [missing article; 'a' would also be fine]
+  + In experiment, we -> In our experiments, we 
+  + We refer this... -> We refer to this...
+  + Due to we model ... relation -> Since we model ... relation labels
+  + over entity ... must not lower -> over the entity ... must not be lower
+  + formula for L_imp is wider than column: reduce size or split over multiple lines
+  + is probability  that might be -> is a probability, which may be
+  + We would like our decoder satisfies, -> We want our decoder to have
+  + fast decoding speed -> fast decoding
+  + relations information -> relation information
+- Sec. 4:
+  + could be found in supplementary -> can be found in the supplementary material   [or: "are provided in ..."]
+  + find similar phenomenon as ... that setting ... makes -> observe a phenomenon similar to ... in that setting ... causes
+  + severer ... poor as -> more severe ... poor due to
+  + Table 4: mention that scores are F1
+  + "removing the implication loss will obviously harm..." -> it seems not to be the case for SciERC? So, is it really that "obvious"?
+  + Logit dropout ... drop sharply -> ... drop more sharply
+  + we observe similar phenomenon -> we observe a similar phenomenon
+  + Fig 4: fonts of axis labels are way too small; this is illegible
+- Footnote markers: please (1) do not include whitespace before the footnote marker, (2) put the marker *after* punctuation (such as , or .) rather than before
+- References: please be consistent in conference naming (EMNLP acronym is sometimes listed, for other years it is not; location of conference is not always included)
+
+Additionally:
+- lines 124-125 - Unclear, please reformulate. What exact aspect of Zheng et al. 2017 model are you addressing? Also, why a single Zheng solution is compared? What about other work that solves relation and entity extraction jointly such as Bekoulis et al. 2018, Luan et al. 2019, Wadden et al. 2019, Eberts et al. 2019, Zaporojets et al. 2020, etc.? Maybe group them? 
+- line 152 - ", Next" -> grammatically incorrect: first ',' should be "."
+- line 252 - "we fed" -> Please, be consistent with the tense
+- line 444 - "span (i,j)" --> unclear what exactly is the span, is this a particular word on row i, column j; or a text from word i to word j?? 
+- line 625 - "are useful" --> "is useful"  [subject = the structural information]
+- lines 388-389 - "spans between entities" ---> not clear; not consistent use of "span" defined in line 178 as "span of words" --> maybe you mean "mention spans involved in a relation between two entities"?
+- lines 438-439: "and then average the two distances as the final difference" --> Unclear, is this average or difference? Can you provide an extra formulation on this process?
+- lines 456-457: notation span(i,j) has not been properly introduced (see also line 444): does it refer to the span of text between the word x_i and x_j? Then it is somewhat confusing with the notation used in equation 325-326 where i and j can belong to two different spans (i.e., relation). Also not consistent with the notation introduced in lines 177-179, (i.e., "e.span"). Please clarify and be consistent in your notation. 
+- lines 220-221 -> term PLM should be defined ("pretrained language model"? -> add it there as "(PLM)").
+- lines 223-228 -> the description does not provide enough detail for the reader to reproduce the results: e.g.: what layers of BERT are used? Is BERT fine-tuned on the used datasets (i.e., ACE04, ACE05, SciERC)? Do you use "overlap" or "independent" chunking for BERT model? How this chunking relates to the window size of cross-sentence context mentioned in lines 226-228.  
+- In the results you are missing comparison with span-based models (ex: Dygie, Dygie++, Luan 2019) which perform equally as good or even better than the model you propose. I would also suggest to add the span-based architectures (Zaporojets et al. 2020, Luan et al. 2018, Luan et al. 2019, Wadden et al. 2019, etc) in the related work, focusing on the main differences from the proposed architecture. 
+- Lines 391-394 - Not clear, can you provide an example of such interactions? 
+- Figure 3 - It is not evident what each of the three matrices on the left part of the figure depict. An extra explanation would be appreciated by the reader. 
+- Line 638 - "utilize" --> Please reformulate/clarify in which way.
+- 727-728 - "We reserve this problem in the future." --> Unclear, please reformulate.  
+- 724-727 - The authors do not provide evidence for the "primary reason" claim, a short evidence/analysis should be done before. 
+- 773-775 - Unclear, please re-elaborate. 
+- 781-786 - Unclear, please re-elaborate. It is not clear how your model solves "exposure bias" and also does not require any "expert knowledge", these two claims appear out of the blue and seem not to be addressed in the paper.
+---------------------------------------------------------------------------
+
+
+
+============================================================================
+                            REVIEWER #2
+============================================================================
+
+The core review
+---------------------------------------------------------------------------
+This paper presents a new approach for joint entity and relation extraction that treats both problems as labeling cells in a self-attention-like matrix. The approach is well-motivated, interesting, and clearly presented. Empirical results appear promising. I believe many ACL attendees will find this approach interesting.
+
+In terms of technical contributions, this paper goes beyond simply proposing the new framing of the problem, by also suggesting reasonable constraints and a simple decoding method. These are adequately motivated and covered in this work, and also leave opportunities open for future work.
+
+I particularly appreciated the efficiency considerations.
+
+It would be helpful if the authors released their code to aid in reproducibility and future work.
+---------------------------------------------------------------------------
+
+
+Reasons to Accept
+---------------------------------------------------------------------------
+- Well-motivated an interesting approach
+ - Promising empirical results
+---------------------------------------------------------------------------
+
+
+Reasons to Reject
+---------------------------------------------------------------------------
+I see none.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 4
+
+Questions for the Author(s)
+---------------------------------------------------------------------------
+The matrix bears some semblance to a self-attention matrix used in the underlying transformer model. Is it possible to utilize self-attention matrix signals more directly?
+
+If I understand correctly, the model's hyperparameters for ACE04 are tuned on ACE04. Wouldn't it be fairer to tune model hyperparameters on a different dataset in all cases (e.g., tune for ACE04 on ACE05)?
+---------------------------------------------------------------------------
+
+
+
+============================================================================
+                            REVIEWER #3
+============================================================================
+
+The core review
+---------------------------------------------------------------------------
+The paper proposes a joint method for entity relation extraction with unified label space. They hypothesize that if the joint methods use shared encoders and decoders, then they should have joint label spaces as well. Previous work that uses unified entity-relation label space faces two problems: it cannot detect overlapping relations (i.e., entities participating multiple relation), and it cannot detect isolated entities (i.e., entities not appearing in any relation). This paper aims to address these challenges as well, when uniting the label space.
+
+
+Main contributions/How do they solve the problem: 
+They view entity detection as a special case of relation classification. They provide a table as an input per sentence. The squares on the diagonal are the entities and the rectangles off the diagonal are the relations. The joint model assigns labels to each cell from a unified label space.They represent a sentence as a table so that they can retain overlapped relations, directed relations, and undirected relations. 
+
+They propose a joint method that consists of filling the table and decoding. They use BERT to create word embeddings for all the words in the sentence.To capture long-range dependencies, they also employ cross-sentence context, which extends the sentence to a fixed window size W=200. After which each word is passed through two dimension-reducing MLPs to identify the head role and the tail role of each word. A scoring vector is calculated for each word pair using the biaffine attention mechanism that is further passed through softmax to be given a label. The label set consists of all the entity types and the relation types and the ⊥ symbol that denotes no relation.  
+
+The training objective is to minimize the loss between the label predicted and the gold label. S represents a sentence here. 
+
+They also add two more constraints as equation assumes that each label is independent in the table. To address this fact they add symmetry constraint and  implication constraint.
+
+Symmetry constraint addresses the fact that entities are symmetrical about the diagonal and 
+symmetric relations are also symmetric about the diagonal. They split the label set into symmetric labels set and asymmetric labels set, decided per dataset. The symmetric loss is calculated as: 
+
+
+Implication constraint states that for a relation to exist between two entities, its two argument entities must also exist.The constraint imposed is that for each word in the diagonal (entity), its maximum possibility over entity type space  must not be lower than the maximum possibility for other words in the same row or column over relation type space.
+
+
+Finally they jointly optimize: 
+
+
+Once the table is filled, the decoding algorithm uses this intermediate table to decode triples. The decoding algorithm works in three steps:  span decoding, entity detection and relation detection. 
+Span decoding: They point out that adjacent rows/columns will belong to an entity span if they are identical in terms of both diagonal and off-diagonal cells, owing to the fact that all the words belonging to the same span will have the same relations with other entities. And hence, if adjacent rows/columns are different then they are entity bounds. Using Euclidean distances between rows and columns, the decoding algorithm finds the entity span boundaries. 
+   
+Entity detection: Given a span (i,j), it decodes the squares that are symmetric around the diagonal. 
+Relation detection: Given two entities e1 and e2, it decodes the rectangle formed by these two entities in the table. 
+
+Results: They achieve SOTA for these two datasets:  ACE04 and SciERC, and comparable results on ACE05. Their base model (BERTbase) achieves competitive relation performance, which even exceeds prior models based on BERTlarge and ALBERTxxlarge. This shows that their model is very efficient. 
+
+Ablation studies: 
+They perform a series of ablation studies that show that: 
+Symmetrical loss and Implication loss when removed hurt the performance of the models. Showing that the structural information incorporated is useful for entity relation extraction. 
+Logit dropout (i.e., applying dropout to the scoring vector before passing it to the Softmax layer) when removed hurts the performance, as it prevents overfitting. 
+Cross sentence context when dropped hurts the performance, as it provides more context.
+They also check with naive decoding called “hard decoding”, which does not take into account the interaction  between entities and relations. Hard decoding hurts the performance the most. This shows that their decoding algorithm performs better by incorporating interactions to infer entities and relations.
+
+Compared to the previous SOTA, their algorithm has a 10X faster inference speed and a better relation performance. 
+They also perform error analysis by grouping the errors into 5 groups: span splitting error (SSE), entity not found (ENF), entity type error (ETE), relation not found (RNF), and relation type error (RTE). SSE is relatively very less pointing to the effectiveness of their span decoding method.
+“Not found error” is the largest of all for both the entities and the relations, because the table filling suffers from the imbalanced classification issue, i.e., the number of ⊥ is much larger than that of other classes. They leave this as a future problem to be solved.
+---------------------------------------------------------------------------
+
+
+Reasons to Accept
+---------------------------------------------------------------------------
+This paper provides an efficient algorithm for entity relation extraction that also achieves the SOTA. It also addresses the challenges of previous joint methods such as not being able to recognize overlapping relations and isolated entities. The model also has more expressiveness in terms of identifying directed relations and undirected relations. The paper also shows that their algorithm that uses BERT base performs comparatively and even higher than many of the previous models based on BERT large and ALBERT xxlarge.
+---------------------------------------------------------------------------
+
+
+Reasons to Reject
+---------------------------------------------------------------------------
+None
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 4
+
+Questions for the Author(s)
+---------------------------------------------------------------------------
+If the authors could elaborate on this, “Note that when we decode the spans, we consider the impacts of all entity types and relation types, achieving strong interactions between entities and relations”, it’ll be really helpful.
+---------------------------------------------------------------------------
+
+
+Typos, Grammar, Style, and Presentation Improvements
+---------------------------------------------------------------------------
+Line 122: i.e., entities participating in multiple relation
+Line 335: Since we model entity and relation
+Line 337: Inspired by the procedures of (Sun et al., 2019), we propose a
+---------------------------------------------------------------------------
+
+
+--

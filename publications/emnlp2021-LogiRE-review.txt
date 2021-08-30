@@ -1,0 +1,156 @@
+============================================================================ 
+EMNLP 2021 Reviews for Submission #4329
+============================================================================ 
+
+Title: Learning Logic Rules for Document-Level Relation Extraction
+Authors: Dongyu Ru, Changzhi Sun, Jiangtao Feng, Lin Qiu, Hao Zhou, Weinan Zhang, Yong Yu and Lei Li
+============================================================================
+                            META-REVIEW
+============================================================================ 
+
+Comments: This paper presents a method to incorporate logic rules in neural network models for document-level relation extraction. The reviewers agreed that the proposed idea is novel and interesting. The experiments are convincing and the paper is well written.
+
+============================================================================
+                            REVIEWER #1
+============================================================================
+
+What is this paper about, what contributions does it make, and what are the main strengths and weaknesses?
+---------------------------------------------------------------------------
+Summary: This paper proposes a novel idea to incorporate logic rules in neural network models for document-level relation extraction. They have a rule generator model and a relation extraction model. Rule generator model learns the logic rules and the relation extraction model utilizes these rules for relation classification. They used an EM algorithm to train the two networks together. They used two datasets for their experiments and showed improvements over the base models. Their LogiRE component can be adapted with any relation extraction models. They experimented with 4 basic relation extraction models and two latest state-of-the-art models.
+Strength: (1) This work introduces a novel idea to incorporate logic rules in the relation extraction models. This can improve the interpretability of the outcome of the models.
+(2) Proposed model showed more than 2% F1 score improvement on the DWIE dataset across 6 relation extraction models which is significant.
+(3) Paper is well written and the models are explained very clearly.
+Weakness: (1) Improvements on the DocRED dataset is very marginal and results on their test set are missing.
+---------------------------------------------------------------------------
+
+
+Reasons to accept
+---------------------------------------------------------------------------
+(1) This work introduces a novel idea to incorporate logic rules in the relation extraction models. This can improve the interpretability of the outcome of the models.
+(2) Proposed model showed more than 2% F1 score improvement on the DWIE dataset across 6 relation extraction models which is significant.
+(3) Paper is well written and the models are explained very clearly.
+---------------------------------------------------------------------------
+
+
+Reasons to reject
+---------------------------------------------------------------------------
+(1) Improvements on the DocRED dataset is very marginal and results on their test set are missing.
+---------------------------------------------------------------------------
+
+
+Questions for the Author(s)
+---------------------------------------------------------------------------
+(1) Will it work only at document-level ? There are many sentence-level relation extraction datasets available and authors should apply their model on those datasets too.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                         Reproducibility: 4
+                        Ethical Concerns: No
+     Overall Recommendation - Long Paper: 3.5
+
+
+============================================================================
+                            REVIEWER #2
+============================================================================
+
+What is this paper about, what contributions does it make, and what are the main strengths and weaknesses?
+---------------------------------------------------------------------------
+This work proposes LogiRE in order to extract relations existing between entity pairs within a document. To be more specific, authors consider logic rules as latent variables and divides the process of relation extraction into 2 steps: Rule generator and Relation Extractor. Inspired from the machine translation, rule generator produces a set of logical rules. On the other hand, rule extractor takes the produced set of logical rules and extracts the relation based on the confidence scores.
+---------------------------------------------------------------------------
+
+
+Reasons to accept
+---------------------------------------------------------------------------
+1.	Good intuition to consider logic rules as latent variables in order to extract relationships from the document.
+2.	Table2 and Table5 (Appendix) demonstrate compelling results.
+3.	Good qualitative analysis.
+---------------------------------------------------------------------------
+
+
+Reasons to reject
+---------------------------------------------------------------------------
+1.	Size of the datasets are relatively small when compared to todayâ€™s large scale datasets.
+---------------------------------------------------------------------------
+
+
+Questions for the Author(s)
+---------------------------------------------------------------------------
+1.	Why are there no Test results for DocRED dataset?
+2.	Please show full results of DocRED in the main article rather than appendix.
+3.	There are grammatical issues in the paper. For eg section 4.3 para1 â€˜;â€™ instead of â€˜.â€™(full stop). Please do a careful read.
+4.	Please give mathematical formulas for ign f1 and logic evaluation metrics.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                         Reproducibility: 5
+                        Ethical Concerns: No
+     Overall Recommendation - Long Paper: 4
+
+
+============================================================================
+                            REVIEWER #3
+============================================================================
+
+What is this paper about, what contributions does it make, and what are the main strengths and weaknesses?
+---------------------------------------------------------------------------
+The paper proposes a probabilistic model learning logic rules. It consists or a rule generator and a relation extractor. The rule generator predicts relations for the relation extractor and the extractor provides supervision signals for the rule generator. Both are optimized using EM. 
+
+The paper is well written and the method is well formulated. The synergy between the two models is something teh paper mentions but could discuss a little bit better. The signals that help in the supervision of the training should be more explicit. Examples illustrating all those can improve the readability.
+---------------------------------------------------------------------------
+
+
+Reasons to accept
+---------------------------------------------------------------------------
+LogiRE works at the document level with detection of rules and relations at long range. 
+
+LogiRE is model agnostic. 
+
+Paper is well written. 
+
+Results are impressive.
+---------------------------------------------------------------------------
+
+
+Reasons to reject
+---------------------------------------------------------------------------
+Lack of details when it comes to explaining the synergy between the two models and why they work together. 
+The authors might think that this is intuitive, but it might also be intuitive that they mislead each other.
+---------------------------------------------------------------------------
+
+
+Questions for the Author(s)
+---------------------------------------------------------------------------
+Maybe use the example from Figure 1 to illustrate the definition and formulation.
+---------------------------------------------------------------------------
+
+
+Missing References
+---------------------------------------------------------------------------
+Some work on inferring Bayesian networks from datasets can be well placed here.
+---------------------------------------------------------------------------
+
+
+Typos, Grammar, Style, and Presentation Improvements
+---------------------------------------------------------------------------
+009: by learning? or for learning?
+017: spell out EM
+196-204: redundant repitition. 
+215: a auto regressive --> an auto ... 
+Introducing the case study earlier and walking through its results in the results section might have been better.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                         Reproducibility: 3
+                        Ethical Concerns: No
+     Overall Recommendation - Long Paper: 4
+
+--

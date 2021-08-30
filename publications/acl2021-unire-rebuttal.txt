@@ -1,0 +1,59 @@
+@reviewer1
+Thanks a lot for your careful reading and many helpful suggestions, they will greatly improve the writing of our paper.
+
+1. About the statistic relevance of the performance,
++ In terms of performance gains, we report results following the commonly used settings (Zhong and Chen 2020, Wang and Lu 2020). We will perform statistical significance tests and add standard deviations to verify the statistic relevance(doing).
++ Besides competitive performance(+~1.0 point), our approach also has fewer parameters(0.5x) and faster inference speed(10x) (Tab.5) than the current SOTA.
+
+2. About handling relations with overlapped entities,
++ Our method **CAN** effectively handle this situation. In the 2D table, when one entity participates in multiple relations, each of these relations corresponds to a unique rectangle, and all rectangles are disjoint. 
++ As shown in Fig.1, the person entity "David Perkins" participates in two relations, ("David Perkins", "wife", PER-SOC) and ("David Perkins", "California", PHYS). The two relations are represented by two different rectangles and can be extracted by our method.
++ Regarding rare situations which an entity has multiple types (say N types), our method is still applicable by performing N binary classification problems.
+
+3. About the span notation,
++ thanks for pointing out the problem. We will clarify notations of span (done).
++ in this paper, span is a sequence of words (we also use notation (i, j) to denote a span from word i to word j). Entity e is a span (e.span) with a pre-deﬁned type (e.type). Besides entity span, we also use it to denote arbitrary word sequences. For example, in Fig.1, "David Perkins", "and", "his" are all spans,  "David Perkins" and "his" are person entities, "and" is a span between two entities.
+
+4. About other mentioned joint models,
++ the extractor in (Zhong and Chen 2020) significantly outperform DyGIE and DYGIE++, while our method achieves better performance than (Zhong and Chen 2020).
++ another reason is that when evaluating performances, DyGIE, DyGIE++, and SpERT do not consider the argument entity type in relation evaluation. We adopt a more strict evaluation criterion: the entity type of each argument must be correct.[1] 
++ DyGIE and DyGIE++ use external datasets (OntoNotes) for multitask learning. SpERT is trained on train+dev data. Thus, it is unfair to directly compare their results.
++ why only discuss the joint learning algorithm in (Zheng et al.2017) in line 124-125. The main reason is that Zheng et al. (2017) is the first to unify the two label spaces. They convert joint entity relation extraction into a single sequence labeling problem. Though this method can not handle the overlapping relation problem, we think it is closer to our unified label space than other joint extraction methods like DyGIE, DyGIE++ and spERT: they are still defined in separate label spaces
++ we will clarify the differences with these works in the final version.
+
+[1] Let’s stop incorrect comparisons in end-to-end relation extraction!, Bruno Taill´e, Vincent Guigue, Geoffrey Scoutheeten, and Patrick Gallinari, EMNLP 2020
+
+5. About approach details,
++ We only use the BERT's top layer as the token representations and fine-tune BERT on target datasets.
++ The maximum length of the sentence is shorter than that of BERT, so we do not use chunking.
+
+6. About decoding algorithm,
++ Our decoding algorithm is a heuristic algorithm: finding span split positions according to a threshold and choosing the label with the highest score in entity and relation decoding. Thus, it can be considered as a greedy algorithm to some extent (line394-395).
+
+7. About Fig.6,
++ The left column is the gold label. The middle column is the biaffine model's predictions (choosing the label with the highest probability for each cell). The right column is the final results after decoding. 
++ There are some errors in the biaffine model's predictions, such as cells in the upper left corner (first example) and upper right corner (second example). However, these errors are corrected after decoding, which demonstrates that our decoding algorithm not only finds all entities and relations but also corrects some errors leveraging table structure and neighbor cells' information.
+
+8. About exposure bias and expert knowledge,
++ Exposure bias is caused by the generation method (Seq2Seq model). Since our method does not use this paradigm, we avoid this problem. 
++ Wang et al.(2018) design a complex transition system to convert this joint task into a directed graph, which requires external expert knowledge. However, our method does not rely on complex expertise.
+
+9. About the main results,
++  Compared with ACE04/ACE05, SciERC is much smaller, so entity performance on SciERC drops sharply. Since Zhong&Chen(2020) is a pipeline method, its relation performance is severely influenced by the poor entity performance. Nevertheless, our model is less influenced in this case and achieves better performance. 
+
+@reviewer2
+Thanks for the valuable comments.
+
+1. About utilizing self-attention matrix,
++ Yes, we are exploring this interesting problem. We think that effectively utilizing the self-attention matrix will further improve the final results (doing).
+2. About the hyper-parameters for ACE04,
++ We tune all hyper-parameters on the ACE05 development set and keep the same settings on ACE04 and SciERC(line480-483).
+
+@reviewer3
+Thanks for the helpful comments.
+
+@general
+About span decoding,
++ As shown in Fig.3, we first flat the probability tensor P as a matrix P_row (P_col). Then for each position i, we calculate l2 distances of the i-th row(column) and  the (i+1)-th row(column) and average the two distances as the final distance(line438-439), i.e., d = (d_row + d_col) / 2. If d > alpha, then position i is a split position.
++ Thanks to the unified label space, our model directly outputs each cell's probability scores on all labels (including entity labels and relation labels). Then both entity and relation scores of each cell are utilized for distance calculation. In other words, entity scores and relation scores jointly decide the split positions.
++ The interaction between entities and relations is naturally modeled in the unified label space. Furthermore, our span decoding method effectively utilizes this interaction and considers the impacts of all entity types and relation types.

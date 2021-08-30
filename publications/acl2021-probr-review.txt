@@ -1,0 +1,156 @@
+============================================================================ 
+ACL-IJCNLP 2021 Reviews for Submission #2534
+============================================================================ 
+
+Title: Probabilistic Graph Reasoning for Natural Proof Generation
+Authors: Changzhi Sun, Xinbo Zhang, Jiangjie Chen, Chun Gan, Yuanbin Wu, Jiaze Chen, Hao Zhou and Lei Li
+============================================================================
+                            META-REVIEW
+============================================================================ 
+
+Comments: The reviewers pointed out some limitations to the writing, experiments of the paper. The authors have addressed some, but not completely. The R1 also pointed out the missing task of learning facts and rules. Even though the authors mentioned that it is out of the scope of the paper, I think the problem is also important to consider.
+
+============================================================================
+                            REVIEWER #1
+============================================================================
+
+The core review
+---------------------------------------------------------------------------
+In order to consider the interdependencies of nodes and edges in the proof graph in the task of reasoning over natural language, the authors proposed an approach for answer prediction and proof generation. The proposed approach defines a joint probabilistic distribution over all possible proofs and answers via an induced graphical model and is optimized using variational approximation on top of neural textual representation. The proposed approach is evaluated on several datasets with different settings.			
+
+Strengths:
+1. The authors propose to use a probabilistic graphical model to explicitly represent the dependencies between the proof generation module and question answering module.
+2. The model is optimized using a variational approach by maximizing the pseudo-likelihood of the joint distribution.
+3. Extensive experiments are conducted to evaluate the model.
+
+Weaknesses:
+1. The paper simply assumes that the context (rules and facts) are already given as the input. However, identifying the candidate rules and facts is also a challenging task. 
+2. In line 309-323, the authors considered all sentence pairs (s_i, s_j) to get the sentence pair representation. Based on the directed proof graph, the computational cost will be high when considering all possible sentence pairs. 
+3. The optimization in section 3.3 is difficult to follow. The authors may need to improve the presentation and provide more details.
+---------------------------------------------------------------------------
+
+
+Reasons to Accept
+---------------------------------------------------------------------------
+The proposed approach is able to explicitly represent the dependencies between the proof generation module and question answering module. 
+Extensive experiments are conducted to evaluate the model.
+---------------------------------------------------------------------------
+
+
+Reasons to Reject
+---------------------------------------------------------------------------
+The paper ignores the task of learning facts and rules used in the context for each question, however, it is one of the most challenging issues in the task of reasoning over natural language. 
+There is no discussion about the time complexity of the proposed approach.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 3
+
+Questions for the Author(s)
+---------------------------------------------------------------------------
+1. How many facts and rules do you have for each dataset? How did you identify the related rules and facts? Are they given as the input for each specific question? Is it possible to identify the candidate facts and rules by the model?
+2. What is the computational complexity of the proposed approach?
+---------------------------------------------------------------------------
+
+
+
+============================================================================
+                            REVIEWER #2
+============================================================================
+
+The core review
+---------------------------------------------------------------------------
+This paper proposes a method PROBER to solve the rule-based reasoning problem to provide the answer as well as generate the question proof. On one hand, this method concatenates all facts/rules and the question as a single input to predict the answer, which is similar to former methods. On the other hand, each fact/rule is regarded as a node in a directed graph and an extra answer node is also included. 
+
+Strengths: 1) The proposed method achieves a better performance than former methods on benchmark rule-based reasoning datasets.
+2) The extensive experiments also prove its good generalizability under few-shot or zero-shot conditions.
+
+Weakness: 1) The method is very similar to the previous method PROVER, excepting an extra virtual answer node as well as some interactions between the proof and the answer node. But there is no such analysis to show how each additional part affects the whole model. So I think the experiments are incomplete.
+2) The description of the optimization is somehow hard to understand. It includes some redundant and confusing information (possibly misunderstood by me) and missing some information for comprehension.
+---------------------------------------------------------------------------
+
+
+Reasons to Accept
+---------------------------------------------------------------------------
+1) The proposed method introduces an extra answer node into the graph of rule-based reasoning problem, which can be used for the interaction between answer predicting and proof generation at a higher level rather than the embedding level as former works. It is reasonable for better performance.
+2) The proposed PROBER method can achieve higher accuracy in both answers predicting and proof generating, under different configurations including fully-supervised training, few-shot training, and zero-shot training.
+---------------------------------------------------------------------------
+
+
+Reasons to Reject
+---------------------------------------------------------------------------
+1) It is generally a method based on PROVER (I think it is not a novel one as it claims, but it should not be a problem). But the experiments do not prove the influence brought by each new module (e.g. the additional output dimensions in MLP and the new objective to train the model). Readers will be interested in these parts and related ablation studies are missing.
+2) The descriptions in Sec 3.3 are a bit confusing (See questions) and I think it can be better re-organized. There are too many flat descriptions about the results and values of tables in the experiment, making this section verbose and boring. While the inspiring analysis about the reason causing such results are missing.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 3.5
+
+Questions for the Author(s)
+---------------------------------------------------------------------------
+1. Compared to PROVER, how each new part affect the performance? (e.g., the extra output values in MLP_2, MLP_3, and the pseudolikelihood loss for answer prediction) Could you provide some experiment results?
+2. In 3.3, what is the meaning of listing formulas about "q"? You use "q" in "L_{node}" and "L_{edge}", but it seems that these two loss items are the same as cross-entropy loss items in PROVER which makes me confused.
+3. L375, the loss item about "L_{qa}", which "Y" do you use for calculating it? According to your description in Sec 3.3, it is the predicted values from the variational model. But in Sec 4.6, it says "PROBER+GOLD" replace the gold proof with predicted proofs by the variational model, which means using the gold proof should be the original model. So what is the exact proof you used during calculating "L_{qa}"? If you use the gold proof for "L_{qa}", what is the difference between it and the corresponding item in PROVER?
+4. I notice that in table 3, PROVER is better at generating proofs than PROBER, while much worse at predicting the answer. Do you have any idea about this phenomenon? Since generating proof is harder than predicting the answer, and a correct proof will make it easier to answer a question.
+---------------------------------------------------------------------------
+
+
+Missing References
+---------------------------------------------------------------------------
+N/A
+---------------------------------------------------------------------------
+
+
+Typos, Grammar, Style, and Presentation Improvements
+---------------------------------------------------------------------------
+Fig.2 (a) The font style of "e_{21}" is different from other annotations. Articles are missing in some texts.
+---------------------------------------------------------------------------
+
+
+
+============================================================================
+                            REVIEWER #3
+============================================================================
+
+The core review
+---------------------------------------------------------------------------
+This paper studies deductive reasoning over natural language. It jointly models the answers and proofs together via an induced graphical model and achieves improvement over SOTA models. 
+
+Strengths are:
+1. The paper studies an interesting topic in question answering reasoning over natural language texts and generates proofs.
+2. The proposed method achieves significant improvement over SOTA performance, especially in the few-shot setting.
+3. The analysis of the paper is thorough and detailed.
+
+Weaknesses are:
+1. The shown reasoning example only leverages a small set of given and related facts and rules. This may limit reasoning in practice. Humans or symbolic reasoning (using formal representations) can do reasoning over a large set. In general, is it possible to do text reasoning over the whole dataset (merging all facts and rules together as explicit knowledge for every question)? Then, is it possible for the proposed method to do so? (it jointly models all possible proofs and answers. and the graph seems huge in this case? )
+2. Since many datasets are synthetic, is it possible to access/extract their formal/symbolic forms and test the performance of traditional purely symbolic methods? We could have a better sense of the difficulty of the task. Is it challenging because of reasoning part or natural language part or others?
+---------------------------------------------------------------------------
+
+
+Reasons to Accept
+---------------------------------------------------------------------------
+1. The paper studies an interesting topic in question answering reasoning over natural language texts and generates proofs.
+2. The proposed method achieves significant improvement over SOTA performance, especially in the few-shot setting.
+3. The analysis of the paper is thorough and detailed.
+---------------------------------------------------------------------------
+
+
+Reasons to Reject
+---------------------------------------------------------------------------
+1. The shown reasoning example only leverages a small set of given and related facts and rules. This may limit reasoning in practice. Humans or symbolic reasoning (using formal representations) can do reasoning over a large set. In general, is it possible to do text reasoning over the whole dataset (merging all facts and rules together as explicit knowledge for every question)? Then, is it possible for the proposed method to do so? (it jointly models all possible proofs and answers. and the graph seems huge in this case? )
+2. Since many datasets are synthetic, is it possible to access/extract their formal/symbolic forms and test the performance of traditional purely symbolic methods? We could have a better sense of the difficulty of the task. Is it challenging because of reasoning part or natural language part or others?
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                  Overall Recommendation: 3.5
+
+--

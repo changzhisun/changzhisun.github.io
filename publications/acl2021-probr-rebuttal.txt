@@ -1,0 +1,81 @@
+To reviewer1:
+Thanks for your valuable comments and suggestions.
+
+Q1:Identifying candidate rules and facts is also challenging?
+A1:We agree with you that identifying rules and facts is important and challenging, which is worthwhile to study(i.e. as a retrieval task) but beyond the scope of this paper. The purpose of PROBR is to study a proper method to derive proof graphs given the set of rules and facts. This task is proposed by Clark et al.(2020).  
+
+Q2:Statistics of the dataset?
+A2:Take DU5 as an example:
+  + num_of_question(train/dev/test):69762/10068/20192
+  + num_of_rules_per_question:avg=5.9,var=6.1,max=9,min=0
+  + num_of_facts_per_question:avg=13.9,var=10.2,max=24,min=8
+  + num_of_rules+facts_per_question:avg=19.7,var=9.28,max=26,min=13
+  - Statistics of other datasets will be included in the appendix.
+
+Q3:Rules given as input?
+A3:Yes. For each specific question, rules and facts are given as input. It’s the same setup as Clark et al.(2020)
+
+Q4:To identify facts and rules by the model?
+A4:Yes if input facts and rules are a small set. PROBR doesn’t necessarily use all rules in the proof with the indicator variables(Figure2(a)).
+
+Q5:Computational complexity?
+A5:The complexity of PROBR is O(L^2 + N^2), where N is the number of rules and facts for each data sample, and L is the total number of tokens for rules and facts per sample. Notice that PROBR has the same order of complexity as the previous SOTA PROVER. The maximum of N and L in our dataset are 26 and 300. 
+
+
+
+
+To reviewer2:
+Thanks for your valuable feedback!
+
+Q1:Comparison with PROVER. 
+A1:PROBR is fundamentally different from PROVER in the model. PROVER only uses a neural network with multi-task training, while our proposed PROBR uses a probabilistic graphical model to formulate the problem(Figure2(b)). Therefore PROBR uses variational inference for generating proofs. 
+
+
+Q2:About influence brought by each module:
+- In Eq1(line240-241), each potential function(\Phi^A,\Phi^V,\Phi^E) contains the answer variable v_A. Hence we conduct ablation experiments by using each potential only, to better understand the contribution in the joint distribution.Results are as follows(on DU5test set,ParaRules,Birds-Electricity):
+  - Only \Phi^A--[DU5test]QA:99.3(-0.6),PA:87.1(-1.7),FA:87.1(-1.7);[ParaRules]QA:53.6(-29.2);[Birds-Electricity]QA:86.5(-9.8)(Equivalent to PROVER)
+  - Only \Phi^V--[DU5test]QA:99.6(-0.3),PA:88.6(-0.2),FA:88.6(-0.2);[ParaRules]QA:63.9(-18.9);[Birds-Electricity]QA:84.6(-11.7)
+  - Only \Phi^E--[DU5test]QA:79.2(-20.7),PA:88.5(-0.3),FA:68.0(-20.8); [ParaRules]QA:59.1(-23.7);[Birds-Electricity]QA:64.8(-31.5)
+- All potentials contribute to final performance(\Phi^V>\Phi^A>\Phi^E). More detailed discussions will be included in the appendix.
+- Each MLP represents a potential. Changing the dimension of MLP means defining a new potential. How to design better potentials is promising. In PROBR, we aim to propose the framework, only adopting simple potentials.
+
+Q3:About "q" in L_{node},L_{edge}:
+- For **final realization**: PROBR is easy to realize based on PROVER. Only answer module is different, while proof module(node and edge) is the same. L_{node} and L_{edge} are the same as cross-entropy loss.
+- For **theoretical foundation**: we start from joint probabilistic distribution over possible proofs and answers with graphical model. Then use variational approximation q to maximize the pseudolikelihood of joint distribution(described in Section3).
+- Simple implementation is guaranteed by theoretical derivations.
+
+Q4:About Y in calculating L_{qa}:
+-In default setting(Sec3.3), we use predicted values from the variational model. In Sec4.6, "PROBR+GOLD" means using gold proof.
+- Sorry for misunderstanding when using "replace...with" in Sec4.6, thanks for pointing it out. It should be "replace predicted proofs from variational model with the gold proof". 
+
+Q5:About performance of proof and answer in Table3:
+- It’s the most exciting ability of PROBR. Can better utilizes proof and makes **much better answers**, even when proofs are comparable to existing baselines.
+- For supervised settings, PROBR is superior to PROVER in both proof and answer. For zero-shot settings, PROBR outperforms PROVER obviously(10points) in QA-accuracy, while slightly lower(within 0.1point) than PROVER in proof-accuracy.
+- A possible reason:Birds-Electricity dataset describes completely different domain from DU5. Considering the portability of proofs, for a given domain-dataset, proofs may tend to a certain structure format. When training with proof-and-answer's joint distribution, an out-of-domain proof might be slightly disturbed, however the question-answering can achieve enhanced robustness.
+- Although PROBR’s proof performance drops(80.7->79.3), predicted answers are indeed more accurate(86.5->96.3). This proves that PROBR can better **utilize more proof information**(**even partial** proof) to help predict answers.
+
+Thanks for pointing out typos! We’ll fix it!
+
+To reviewer3:
+
+Thank you for your valuable comments.
+
+Q1:About reasoning over the whole dataset:
+- The task of reasoning over natural language is raised by(Clark et al.,2020), and related works(line764-778) are only in the exploratory stage. For now, we focus on a given set of facts+rules(max_num_of_sentence_per_sample=26) following(Saha et al.,2020,Clark et al.,2020).
+- Text reasoning over the whole dataset is a good research direction. Overall, a practical text reasoning system can be pipelined into two stages: retrieval and proof-reasoning. In retrieval stage, we can recall related sentences to narrow down candidate contexts. And in proof-reasoning stage, we can perform PROBR on the selected candidate context set.
+- For fair comparison with state-of-the-art baselines(PROVER), we only focus on the second stage. Also, text retrieval for large sets deserves further exploration.
+
+Q2:About extracting formal/symbolic forms:
+- We want to reclarify that we focus on natural language reasoning, to bypass symbolic approach because of the difficulty for natural language semantic parsing and extracting symbolic forms(line36-38,line737-739).
+- Since all synthetic datasets in the paper have no conflicting rules per sample, the main challenge is in parsing natural language. If we can obtain accurate symbolic forms, we can conduct symbolic reasoning(forward/backward inference) to get exact answers, such as DU0-DU5 dataset(exactly generated through templates).
+- However, ParaRules dataset is paraphrased by humans. It’s hard to access symbolic forms by semantic parsing(line36-38,line737-739). Table7 also proves the challenge of natural language.
+
+General Response:
+We thank all reviewers for your constructive feedback!
+
+About Section3.3(Reviewer1&Reviewer2):
+- Overall, PROBR is a mixture of independent(variational) model and undirected graphical model through some reasonable approximations. Final optimization procedures can be briefly described as follows.
+ 1. Adopt the independent factorized probability over nodes and edges variables, q(V) and q(E)(line357-359, line371-373). Given the gold proof, we have L_{node}=-log q(V=goldV), L_{edge}=-logq(E=goldE)
+ 2. Adopt the potentials(undirected graphical model) to define the conditional probability p(A|E,V), which corresponds to the pseudo-likelihood(line375). It’s worth noting that E and V are predictions by q(V) and q(E). Given gold answers, we have L_{qa}=-log p(A=goldA | E,V)
+ 3. Minimize the sum of the three negative log-likelihoods(L_{final},line369).
+- We will polish the description of theoretical derivations in Section3.3 as suggested.
