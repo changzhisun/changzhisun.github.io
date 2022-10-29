@@ -1,0 +1,137 @@
+============================================================================ 
+COLING 2022 Reviews for Submission #172
+============================================================================ 
+
+Title: Few Clean Instances Help Denoising Distant Supervision
+Authors: Yufang Liu, Ziyin Huang, Yijun Wang, Changzhi Sun, Man Lan, Yuanbin Wu, Xiaofeng Mou and Jian Tang
+
+
+============================================================================
+                            REVIEWER #1
+============================================================================
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                         Relevance (1-5): 5
+               Readability/clarity (1-5): 3
+                       Originality (1-5): 4
+   Technical correctness/soundness (1-5): 3
+                   Reproducibility (1-5): 3
+                         Substance (1-5): 3
+
+Detailed Comments
+---------------------------------------------------------------------------
+Distant Supervised Relation Extraction (DS-RE) always comes with wrong labeling problem. This paper proposed an influence function based method to refine the training data so as to improve the performance of a DS-RE model. This work hypothesizes that a small set of clean instances obtained by the proposed method would be effective for performance improvement on DS-RE. To evaluate the effectiveness, this work takes other filtering methods such as ATT, RL and ARNOR as the baselines to conduct performance comparison on NYT dataset.
+    
+- pros:
+    1. This work aims to tackle an essential problem (i.e., wrong labeling problem) of DS-RE. 
+    2. This work applies influence functions for handling this problem and conducts extensive mathematical analysis for theoretical soundness. 
+    3. This work selects three representative filtering approaches as baselines and utilizes two distinct datasets for performance evaluation. 
+
+- cons:
+    1. This work hypothesizes that the proposed denoising method can extract clean instances for DS-RE. However, there is no quantitative evaluation about the "cleanliness", therefore readers have no idea about the denoising capacity of the proposed method. 
+    2. Since the size of extracted instances is small, it is feasible to manually evaluate their quality, but there is no such direct manual evaluation, which has been used for evaluating ARNOR (Jia et al., 2019).  
+    3. Due to the lack of direct evaluation of the denoising capacity, it is hard to say that the proposed method is more effective than the baselines on selecting clean instances. Therefore, it is difficult to conclude that the performance gain observed in Table1 is caused by the superior denoising capacity of the proposed method, which is the main claim of this work.
+    4. This paper emphasizes that the proposed method is "model-agnostic". However, the performance gain is mainly observed in CNN based models but not on LSTM based one, especially on Testing set. In addition, readers have no idea about its performance on the prevalent BERT based DS-RE model, which has been implemented in OpenNRE.
+    5. The proposed bootstrapping approach is claimed to be effective in Figure1. However, there is no detailed explanation about why the performance gradually decreases after Epoch 15. This might not prove the effectiveness of the  teacher-student mechanism.
+    6. Although there is extensive theoretical analysis about the influence function based denoising method, there is no practical instance based explanation about the intuition behind it in the introduction part, so readers might hard to follow this paper.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+            Overall recommendation (1-5): 2
+                        Confidence (1-5): 4
+                       Presentation Type: Poster
+     Recommendation for Best Paper Award: No
+
+
+============================================================================
+                            REVIEWER #2
+============================================================================
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                         Relevance (1-5): 4
+               Readability/clarity (1-5): 4
+                       Originality (1-5): 3
+   Technical correctness/soundness (1-5): 4
+                   Reproducibility (1-5): 4
+                         Substance (1-5): 3
+
+Detailed Comments
+---------------------------------------------------------------------------
+Few Clean Instances Help Denoising Distant Supervision
+
+The authors have made a great work by guiding the reader on the step-by-step of
+their experiment, providing clear reasons on why and how they decided to develop
+and propose this method. Making use of clear mathematical language and then
+rephrasing their Lemmas and propositions, is very helpful for sharing the knowledge
+beyond the scientific community.
+
+A very interesting part of the article is the reference to related work, as it opens the
+dialogue for better understanding behind the reasons for the study. Being a
+model-agnostic denoising method the one that is proposed in this paper, having
+multiple references and points for comparison becomes a very important topic to
+consider.
+
+Finally, the method proves to work well with the datasets mentioned by the authors.
+However, it would be very interesting to study the performance of this method on a
+wider variety of texts, such as literature and social media.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+            Overall recommendation (1-5): 4
+                        Confidence (1-5): 3
+                       Presentation Type: Poster
+     Recommendation for Best Paper Award: No
+
+
+============================================================================
+                            REVIEWER #3
+============================================================================
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                         Relevance (1-5): 4
+               Readability/clarity (1-5): 3
+                       Originality (1-5): 3
+   Technical correctness/soundness (1-5): 3
+                   Reproducibility (1-5): 4
+                         Substance (1-5): 4
+
+Detailed Comments
+---------------------------------------------------------------------------
+This paper studies to help distantly supervised RE with a small clean dataset. A new criterion is proposed for clean instance selection based on influence functions, and a teacher-student mechanism for controlling purity of intermediate results during bootstrapping.
+
+Strengths:
+1. The paper tackles denoising distantly supervised relation extraction, which an important problem.
+2. The paper is well written.
+3. The experiments show the effectiveness of the model.
+4. Code for the model is provided.
+
+Weakness:
+1. [1] shows that pre-trained language models have strong denoising capability without special treatments. It will be better to also evaluate the model under pre-trained language models such as BERT.
+2. The authors should provide a detailed README file for the code.
+
+Reference.
+1. Manual Evaluation Matters: Reviewing Test Protocols of Distantly Supervised Relation Extraction. Findings of ACL 2021.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+            Overall recommendation (1-5): 4
+                        Confidence (1-5): 3
+                       Presentation Type: Poster
+     Recommendation for Best Paper Award: No
+
+--

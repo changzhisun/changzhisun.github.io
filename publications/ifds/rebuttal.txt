@@ -1,0 +1,39 @@
+We would like to thank all reviewers for all valuable suggestions and comments. The followings are some discussions.
+
+**Review 1**
+
+Thanks for your valuable comments.
+
+- about "cleanliness" selected samples and conclusions from Table 1
+  * we do have a qualitative analysis on the "cleanliness" of selected data in line 489-510 and Table 3. It shows that the selected samples (with high scores according to criterion 2) are indeed correct samples (true positive), while samples with low scores are more likely to be noise (false positive).  We will try to add a manual evaluation for better qualitative analyses. Thanks for your comments.
+  * we think it is reasonable to take the performance on the (clean) testing set as a proxy of the cleanliness of the training set: the more noise data in a training set, the worse performances on a clean testing set.  In fact, we can view noise samples as out-of-distribution points, and **the wrongly labeled data make the distribution of training samples be different from the distribution of testing samples, thus affecting testing performances.** In Table 1, baselines and our models select different subsets of a noisy dataset. A good testing performance means that the training set has a close distribution with the clean testing set, thus is more likely to contain less wrongly labeled data. We will make our argument more clear in the revised version. 
+  
+- about model performances on different encoders
+  * regarding the LSTM encoder, 1) the code of official baseline ARNOR (Jia et al., 2019) is not available. We find it is hard to reproduce the reported performances using community implementation of ARNOR (https://github.com/HeYilong0316/ARNOR, issue 1). 2) our main conclusion still holds on LSTM encoders: Cr2 is better than Cr1/Conf which means the proposed denoising method works better.
+  * regarding BERT-family encoders, thanks for the suggestion, and we will add an experiment in the revised version.
+
+- about the effectiveness of the teacher-student update
+  * "performances drop after Epoch 15 (Figure 1)". we have discussed the reason for this phenomenon in line 436-443. One challenge of all bootstrapping-based methods is how to control the purity of the selected dataset, though we have used a teacher-student style update, the noisy instances inevitably join the selected dataset gradually. So the performance slightly degrades in the later epochs when noisy instances accumulate. 
+  * we can also observe that (Figure 2) teacher-student updates are more effective when the noise ratio is large.
+  * how to further improve the effectiveness of teacher-student updates is our important future work, thanks for the comment.
+
+- about intuitions behind Lemma 1, 
+  * we will add more connections in the introduction part to explain Lemma1. Thanks for the suggestion.
+
+
+**Review 2**
+
+Thanks for your comments. 
+
+- about extensions of our methods in other fields
+  * we agree that more study would be useful to understand the details of the denoising ability of our method. We will add more experiments on texts in other fields. Thanks for your moments.
+
+
+**Review 3**
+
+Thanks for your comments.
+
+- about pre-trained model 
+  * thanks for the suggestion on adding experiments on pre-trained models, we will add an experiment in the revised version.
+- about code
+  * thanks for your careful review of our code. We will further improve it and add detailed comments before making it public. Thanks for your comments.

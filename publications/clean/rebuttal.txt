@@ -1,0 +1,32 @@
+Response #1
+Thanks for your positive comments and constructive suggestions.
+
+- About more effective pre-trained language models as backbones:
+We conduct experiments on RoBERTa and replace BERT backbone in ISAIV with RoBERTa (RoBERTa+ISAIV) on Restaurant reviews. The results suggest that our method achieves a better performance than RoBERTa, which also indicates the efficacy and generality of our method. We will perfect more experiments and add them to the next version.  Thanks for your constructive suggestions.
+
+The performance of RoBERTa-based models on Restaurant.
+<pre>
+|               | Acc   | F1    | ESE   | ISE   |
+|---------------|-------|-------|-------|-------|
+| RoBERTa       | 86.07 | 78.79 | 91.79 | 67.79 |
+| RoBERTa+ISAIV | 87.95 | 82.35 | 93.08 | 71.54 |
+</pre>
+
+About wrong cases：
+- Thanks for your good comments. We analyze 20 wrong examples on the restaurant dataset and find the model may fail when encountering the expression with unusual knowledge. For instance, whether BERT or our model (ISAIV) wrongly predicts positive on "15% gratuity automatically added to the bill." Due to the lack of prior knowledge about gratuity, "automatically added" is likely to be perceived as a good thing. Admittedly, our work mainly focuses on the reasoning ability and doesn't integrate external corpus and knowledge and therefore lacks abundant prior knowledge. T﻿h﻿e﻿ ﻿b﻿e﻿t﻿t﻿e﻿r﻿ ﻿combination ﻿of ﻿prior ﻿knowledge ﻿a﻿n﻿d﻿ ﻿c﻿a﻿u﻿s﻿a﻿l﻿ ﻿i﻿n﻿f﻿e﻿r﻿e﻿n﻿c﻿e﻿ ﻿i﻿s﻿ ﻿a﻿l﻿s﻿o﻿ ﻿a﻿n﻿ ﻿i﻿n﻿t﻿e﻿r﻿e﻿s﻿t﻿i﻿n﻿g﻿ and worth exploring ﻿f﻿i﻿e﻿l﻿d﻿.﻿ We will provide a detailed analysis in the next version.
+
+Response #2
+Thank you for reviewing our paper. 
+
+About consideration of  the confounder related to rhetoric:
+- Sorry to confuse you due to the relatively brief explanation of the background knowledge, we will improve our explanation to make it as accessible as possible. Notably, we indirectly eliminate the effect of this kind of confounders by means of instrument variable. We also categorize such confounders as "Rhetoric Confounding Word" (lines 260-263) and give an example (lines 451-456) to show the effectiveness of our work. We likewise agree that rhetoric such as rhetorical questions and sarcasm is important to implicit sentiment analysis. -- On the one hand, they're difficult to be observed directly, i.e. measuring the exact distribution of these variable's values, which don't accord with the conditions of the other methods, like backdoor or front-door adjustment. 
+-- On the other hand, the advantage of instrument variable estimation, the method we utilize, is that we can eliminate the confounder indirectly by solely adjusting the value of the well-chosen instrument variable. 
+
+About grammar errors
+- We will correct grammar errors and improve the writing of the paper to enable readers to understand more easily and fluently.
+
+Response #3
+Thank you for reviewing our paper and pointing out the grammatical errors. We will definitely revise and polish it thoroughly and precisely to make readers understand it more fluently and easily.
+
+General Response
+We thank all the reviewers for their valuable comments and constructive suggestions. For the typographical and grammatical errors, we will revise them in the next version.

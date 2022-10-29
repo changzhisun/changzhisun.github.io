@@ -1,0 +1,129 @@
+============================================================================ 
+COLING 2022 Reviews for Submission #981
+============================================================================ 
+
+Title: Causal Intervention Improves Implicit Sentiment Analysis
+Authors: Siyin Wang, Jie Zhou, Changzhi Sun, Junjie Ye, Tao Gui, Qi Zhang and Xuanjing Huang
+
+
+============================================================================
+                            REVIEWER #1
+============================================================================
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                         Relevance (1-5): 5
+               Readability/clarity (1-5): 4
+                       Originality (1-5): 4
+   Technical correctness/soundness (1-5): 4
+                   Reproducibility (1-5): 4
+                         Substance (1-5): 4
+
+Detailed Comments
+---------------------------------------------------------------------------
+This paper introduces a new perspective to rethink the implicit sentiment. I think this is a very good progress and innovation in the direction of sentiment analysis. And proposes a casual intervention model ISAIV for implicit sentiment analysis. The experimental results show the model is effective. So I think the paper is good enough to be accepted by the COLING conference. 
+However, I still have two concerns: (1) The baselines of BERT-based models are almost using BERT as backbones, I suggest more effective pre-trained language models should be used. So the work will be more solid. (2) The case studies in the paper are all showing that ISAIV predicts correctly. I think the failure cases are also important to understand different aspects of the model and show its limitations. The authors should consider it.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+            Overall recommendation (1-5): 4
+                        Confidence (1-5): 3
+                       Presentation Type: Poster
+     Recommendation for Best Paper Award: No
+
+
+============================================================================
+                            REVIEWER #2
+============================================================================
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                         Relevance (1-5): 4
+               Readability/clarity (1-5): 3
+                       Originality (1-5): 4
+   Technical correctness/soundness (1-5): 4
+                   Reproducibility (1-5): 3
+                         Substance (1-5): 3
+
+Detailed Comments
+---------------------------------------------------------------------------
+In this work, the authors tackle one of the issues of neural networks and transformer models for aspect-based sentiment analysis. The neural models consider the broad context of each text, which can lead to the system learning spurious correlations or 'shortcuts'. This means that the sentiment of generally positive tweets bleeds into the aspect-specific evaluations, which is problematic because a client can be positive about the quality of a product but still think the price is too high. Because of these shortcuts, the positive sentiment about the products quality influences the systems assessment about the aspect 'price'.  In the scope of this paper, the second evaluation is usually not explicit but rather implicit and should be read between the lines. This paper attempts to solve this issue from a causal perspective by using the instrumental variable. This is different from other research because no other variables, like confounders are not taken into consideration. The af!
+ orementioned approach is evaluated on implicit sentiment analysis as a whole and on aspect-based implicit sentiment analysis. The results of this evaluation are tested with adversarial attacks and case studies.
+
+When discussing the instrument variable, the authors mention that they do not take confounders, such as rhetorical questions and sarcasm, into account because these are too polymorphic and that randomized controlled trials are not feasible. Although I do not doubt the technical knowledge of the authors, I would still consider this kind of confounders essential to implicit sentiment analysis. Implicit sentiment could be extremely useful when analyzing complex figurative and creative language use. The authors also mention in that considering the existence of the confounder is unavoidable, but focus on the instrumental variable. While their system does improve the performance of neural networks, I am afraid that these increases may be limited as they are not including the confounders (related to figurative language use).
+
+In the section on evaluation, the authors also experimented on explicit datasets, which is very valuable to show that their approach does not hurt the performance of the neural models on the explicit data, while focusing their improvements on implicit sentiment. I believe they have done a great job at balancing out the impact of the sentiment words: making sure they do not decide the sentiment of every aspect in the sentence but also not ignoring them entirely. I believe this paper could be an interesting addition to the conference.
+
+Strengths: 
+interesting perspective, strong technical background, evaluated on a general and more specific use-case with robustness in mind
+
+Weaknesses:
+not very accessible to readers with a less technical background
+
+remarks:
+line 122: Starting a sentence with "And", using shortened forms, such as "don't" should probably be omitted in academic papers.
+bit unusual to keep the related work for the end of the paper (section 6), right before the conclusion
+line 571:  and analysis the four main forms of sentiment words --> rewrite this part of the sentence
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+            Overall recommendation (1-5): 4
+                        Confidence (1-5): 1
+                       Presentation Type: Poster
+     Recommendation for Best Paper Award: No
+
+
+============================================================================
+                            REVIEWER #3
+============================================================================
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                         Relevance (1-5): 5
+               Readability/clarity (1-5): 2
+                       Originality (1-5): 4
+   Technical correctness/soundness (1-5): 4
+                   Reproducibility (1-5): 3
+                         Substance (1-5): 3
+
+Detailed Comments
+---------------------------------------------------------------------------
+Strengths: the work presented in the paper is original and interesting. Experiments are well designed and executed, and results seem to back up the author's claims.
+
+Weaknesses: the paper is very poorly written, as it is plagued with lexical, grammatical and style errors. At times it is even hard to understand the intended message. 
+
+Here are a few examples:
+
+- 003	It is because -> This is because (still, it sounds like a gratuitous claim in an abstract. Do use a modal verb: "this may be due to the fact that...")
+- 013	we introduce *an* instrumental variable
+- 017	the proposed ISAIV -> ISAIV model 
+- 029	Yet despite the march of state-of-the-art -> Yet, despite the ??? (I'm not sure what the intended meaning is, but "march" is not acceptable here)
+- 040	Take aspect-based sentiment analysis (ABSA) as an example -> this is too informal. Rephrase
+- 042 the aspect "food” has explicit sentiment words 042 "definitely good”, but aspect "price” does not. This is quite arguable: "couldn't justify" is clearly a lexical sentiment word. A better example should be given.
+- 050	the co-occurrence between -> the co-occurrence of
+
+- 361	The desperation??? of explicit sentiment
+- 366	adopt two public used metrics
+
+It definitely needs a thorough revision by a language expert or native speaker of English.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+            Overall recommendation (1-5): 4
+                        Confidence (1-5): 4
+                       Presentation Type: Poster
+     Recommendation for Best Paper Award: No
+
+--
