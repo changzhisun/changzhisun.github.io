@@ -1,0 +1,18 @@
+@article{10.1145/3770709,
+author = {Li, Zhuoming and Liu, Aitong and Jia, Mengxi and Lu, Yubo and Zhang, Tengxiang and Sun, Changzhi and Zhang, Dell and Li, Xuelong},
+title = {Gestura: A LVLM-Powered System Bridging Motion and Semantics for Real-Time Free-Form Gesture Understanding},
+year = {2025},
+issue_date = {December 2025},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {9},
+number = {4},
+url = {https://doi.org/10.1145/3770709},
+doi = {10.1145/3770709},
+abstract = {Free-form gesture understanding is highly appealing for human-computer interaction, as it liberates users from the constraints of predefined gesture categories. However, the sole existing solution—GestureGPT—suffers from limited recognition accuracy and slow response times. In this paper, we propose Gestura, an end-to-end system for free-form gesture understanding. Gestura harnesses a pre-trained Large Vision-Language Model (LVLM) to align the highly dynamic and diverse patterns of free-form gestures with high-level semantic concepts. To better capture subtle hand movements across different styles, we introduce a Landmark Processing Module that compensate for LVLMs' lack of fine-grained domain knowledge by embedding anatomical hand priors. Further, a Chain-of-Thought (CoT) reasoning strategy enables step-by-step semantic inference, transforming shallow knowledge into deep semantic understanding and significantly enhancing the model's ability to interpret ambiguous or unconventional gestures. Together, these components allow Gestura to achieve robust and adaptable free-form gesture comprehension. Additionally, we have developed the first open-source dataset for free-form gesture intention reasoning and understanding with over 300,000 annotated QA pairs. Experimental results show that Gestura achieves the accuracy of 84.73\% (closed-set) / 64.14\% (open-set) in the exocentric (third-person) setting and 66.14\% (closed-set) / 21.71\% (open-set) in the egocentric (first-person) setting, achieving approximately 20\% and 40\% higher accuracy on closed-set and open-set tasks, respectively, compared to GestureGPT. Moreover, Gestura achieves over a 100\texttimes{} speedup in response time (1.6 seconds vs. 227 seconds) on an 8B-sized model deployed on a single NVIDIA A100 40GB GPU, and has been validated through real-device experiments with an edge-cloud collaborative setup, bringing free-form gesture understanding markedly closer to practical, real-world deployment. Both the dataset and code about the project can be accessed at https://evans-lx.github.io/Gestura/.},
+journal = {Proc. ACM Interact. Mob. Wearable Ubiquitous Technol.},
+month = dec,
+articleno = {193},
+numpages = {29},
+keywords = {Free-form Gesture, Gesture Understanding, Gesture Intention, Large Vision Language Model, Multi-Modal}
+}
