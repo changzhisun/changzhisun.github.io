@@ -1,0 +1,4 @@
+# Display .bib files as plain text in browser instead of downloading
+<FilesMatch "\.bib$">
+    ForceType text/plain
+</FilesMatch>
